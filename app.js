@@ -2,6 +2,7 @@ import { getCurrentUser, switchUserRole, initializeAuth } from "./src/services/a
 import { mockProperties } from "./src/data/mockProperties.js";
 import { initHeader, updateHeaderUI } from "./src/components/Header.js";
 import { initBackgroundAudio } from "./src/components/BackgroundAudio.js";
+import { L, applyStaticTranslations } from "./src/services/i18n.js";
 
 // Initialize Authentication
 initializeAuth();
@@ -41,9 +42,11 @@ const routes = {
     return renderClientDashboard(state);
   },
   "crm": async () => {
-    // If client, redirect to client-dashboard or show alert
-    if (state.currentUser.role === "client") {
-      alert("Accediendo a la sección de Asesores. Se cambiará el rol a Asesor para demostración.");
+    if (!state.currentUser || state.currentUser.role === "client") {
+      alert(L(
+        "Accediendo a la sección de Asesores. Se cambiará el rol a Asesor para demostración.",
+        "Accessing the Advisors section. Switching role to Advisor for demonstration."
+      ));
       state.currentUser = switchUserRole("advisor");
       updateHeaderUI(state);
     }
@@ -59,8 +62,11 @@ const routes = {
     return renderCalculatorView(state);
   },
   "admin": async () => {
-    if (state.currentUser.role !== "admin") {
-      alert("Accediendo a la consola de Administración General. Cambiando rol a Administrador.");
+    if (!state.currentUser || state.currentUser.role !== "admin") {
+      alert(L(
+        "Accediendo a la consola de Administración General. Cambiando rol a Administrador.",
+        "Accessing the General Admin Console. Switching role to Administrator."
+      ));
       state.currentUser = switchUserRole("admin");
       updateHeaderUI(state);
     }
@@ -123,6 +129,10 @@ async function router() {
       document.querySelector('[data-view="calculator"]')?.classList.add("active");
     } else if (hash === "#admin") {
       viewName = "admin";
+    } else if (hash === "#legal") {
+      viewName = "legal";
+    } else if (hash === "#avaluos") {
+      viewName = "avaluos";
     } else {
       viewName = "home";
     }
@@ -134,11 +144,11 @@ async function router() {
       root.innerHTML = html;
       if (init) init(state);
     } else {
-      root.innerHTML = `<div class="section-container"><h2>Error 404: Vista no encontrada</h2></div>`;
+      root.innerHTML = `<div class="section-container"><h2>${L("Error 404: Vista no encontrada", "Error 404: View not found")}</h2></div>`;
     }
   } catch (error) {
     console.error("Error cargando la vista:", error);
-    root.innerHTML = `<div class="section-container"><h2>Error al cargar la página</h2><p>${error.message}</p></div>`;
+    root.innerHTML = `<div class="section-container"><h2>${L("Error al cargar la página", "Error loading page")}</h2><p>${error.message}</p></div>`;
   }
 
   // Fade-in animation & initialize icons
@@ -169,6 +179,14 @@ function setupEvents() {
     updateHeaderUI(state);
     router();
   });
+
+  // Escuchar cambios de idioma ES / EN
+  window.addEventListener("mudat_lang_change", () => {
+    updateHeaderUI(state);
+    router();
+  });
+
+  applyStaticTranslations();
 
   // Inicializar controlador unificado del Header
   initHeader(state, (updatedUser) => {
@@ -269,28 +287,46 @@ function appendChatMessage(sender, text) {
 function simulateAIResponse(query) {
   const lowerQuery = query.toLowerCase();
   
-  if (lowerQuery.includes("plusvalía") || lowerQuery.includes("plusvalia") || lowerQuery.includes("zona")) {
-    return "📈 **Análisis de Plusvalía MudaT AI**:\n- **CDMX (Polanco/Condesa)**: Mantiene un crecimiento constante del **8% al 9.5% anual** impulsado por renta de corta estancia.\n- **San Pedro Garza García (NL)**: Líder nacional con **11.5% anual** por alta demanda corporativa y residencial premium.\n- **Guadalajara (Providencia)**: **12.0% anual** debido al boom tecnológico y preventas inmobiliarias.\n- **Riviera Maya (Tulum)**: Registra un histórico **13.8% anual**, aunque con mayor volatilidad. Ideal para esquemas de ROI por renta vacacional.";
+  if (lowerQuery.includes("plusvalía") || lowerQuery.includes("plusvalia") || lowerQuery.includes("zona") || lowerQuery.includes("appreciation") || lowerQuery.includes("area")) {
+    return L(
+      "📈 **Análisis de Plusvalía MudaT AI**:\n- **CDMX (Polanco/Condesa)**: Mantiene un crecimiento constante del **8% al 9.5% anual** impulsado por renta de corta estancia.\n- **San Pedro Garza García (NL)**: Líder nacional con **11.5% anual** por alta demanda corporativa y residencial premium.\n- **Guadalajara (Providencia)**: **12.0% anual** debido al boom tecnológico y preventas inmobiliarias.\n- **Riviera Maya (Tulum)**: Registra un histórico **13.8% anual**, aunque con mayor volatilidad. Ideal para esquemas de ROI por renta vacacional.",
+      "📈 **MudaT AI Appreciation Analysis**:\n- **CDMX (Polanco/Condesa)**: Maintains steady **8%–9.5% annual growth** driven by short-term rentals.\n- **San Pedro Garza García (NL)**: National leader at **11.5% annually** thanks to high corporate and luxury residential demand.\n- **Guadalajara (Providencia)**: **12.0% annually** driven by the tech boom and presale projects.\n- **Riviera Maya (Tulum)**: Historical **13.8% annually** with higher volatility. Ideal for vacation-rental ROI strategies."
+    );
   }
   
-  if (lowerQuery.includes("mensualidad") || lowerQuery.includes("crédito") || lowerQuery.includes("credito") || lowerQuery.includes("hipoteca")) {
-    return "🧮 **Simulador Hipotecario MudaT AI**:\nPara un crédito promedio de **$3,500,000 MXN** con una tasa de interés del **10.2%** y plazo a **20 años**:\n- **Mensualidad Estimada**: ~$34,250 MXN.\n- **Enganche Recomendado**: 20% ($700,000 MXN) para mejores tasas.\n- **Ingreso Mínimo Sugerido**: ~$102,000 MXN mensuales comprobables.\n\n¿Quieres que simulemos un monto de propiedad diferente o solicitemos una pre-aprobación bancaria directa desde tu portal?";
+  if (lowerQuery.includes("mensualidad") || lowerQuery.includes("crédito") || lowerQuery.includes("credito") || lowerQuery.includes("hipoteca") || lowerQuery.includes("mortgage") || lowerQuery.includes("payment") || lowerQuery.includes("monthly")) {
+    return L(
+      "🧮 **Simulador Hipotecario MudaT AI**:\nPara un crédito promedio de **$3,500,000 MXN** con una tasa de interés del **10.2%** y plazo a **20 años**:\n- **Mensualidad Estimada**: ~$34,250 MXN.\n- **Enganche Recomendado**: 20% ($700,000 MXN) para mejores tasas.\n- **Ingreso Mínimo Sugerido**: ~$102,000 MXN mensuales comprobables.\n\n¿Quieres que simulemos un monto de propiedad diferente o solicitemos una pre-aprobación bancaria directa desde tu portal?",
+      "🧮 **MudaT AI Mortgage Simulator**:\nFor an average **$3,500,000 MXN** loan at **10.2%** interest over **20 years**:\n- **Estimated Monthly Payment**: ~$34,250 MXN.\n- **Recommended Down Payment**: 20% ($700,000 MXN) for optimal rates.\n- **Suggested Minimum Income**: ~$102,000 MXN verifiable per month.\n\nWould you like to simulate a different property amount or request direct bank pre-approval from your portal?"
+    );
   }
 
-  if (lowerQuery.includes("retorno") || lowerQuery.includes("roi") || lowerQuery.includes("rendimiento")) {
-    return "💰 **Retornos de Inversión (ROI) Estimados**:\n- **Tulum (Aldea Zama)**: **10% - 12% anual** operando en plataformas de renta vacacional.\n- **Condesa Loft (CDMX)**: **7.5% - 8.5% anual** para rentas corporativas y nómadas digitales.\n- **Polanco Penthouse**: **5.5% - 6.8% anual**, enfocado principalmente en ganancia patrimonial de largo plazo.\n- **Oficinas Valle Oriente (MTY)**: **7.0% anual** con contratos comerciales triple net (NNN).";
+  if (lowerQuery.includes("retorno") || lowerQuery.includes("roi") || lowerQuery.includes("rendimiento") || lowerQuery.includes("return")) {
+    return L(
+      "💰 **Retornos de Inversión (ROI) Estimados**:\n- **Tulum (Aldea Zama)**: **10% - 12% anual** operando en plataformas de renta vacacional.\n- **Condesa Loft (CDMX)**: **7.5% - 8.5% anual** para rentas corporativas y nómadas digitales.\n- **Polanco Penthouse**: **5.5% - 6.8% anual**, enfocado principalmente en ganancia patrimonial de largo plazo.\n- **Oficinas Valle Oriente (MTY)**: **7.0% anual** con contratos comerciales triple net (NNN).",
+      "💰 **Estimated Return on Investment (ROI)**:\n- **Tulum (Aldea Zama)**: **10% - 12% annually** on vacation-rental platforms.\n- **Condesa Loft (CDMX)**: **7.5% - 8.5% annually** for corporate and digital nomad leases.\n- **Polanco Penthouse**: **5.5% - 6.8% annually**, focused on long-term equity appreciation.\n- **Valle Oriente Offices (MTY)**: **7.0% annually** under triple-net (NNN) commercial leases."
+    );
   }
 
-  if (lowerQuery.includes("similares") || lowerQuery.includes("propiedades") || lowerQuery.includes("catalogo") || lowerQuery.includes("busco")) {
-    const list = state.properties.slice(0, 3).map((p, i) => `${i+1}. *${p.title}* (${p.location.city}) - ${p.category}. ${p.plusvalia ? 'IA Score Alto' : 'Destacada'}`).join('\n');
-    return "🏠 **Recomendaciones Inteligentes (Tiempo Real)**:\nBasado en nuestro inventario actual, te sugiero revisar:\n" + list + "\n\nPuedes navegar a la sección de **Comprar** o **Rentar** en el menú para ver la lista completa con mapa interactivo.";
+  if (lowerQuery.includes("similares") || lowerQuery.includes("propiedades") || lowerQuery.includes("catalogo") || lowerQuery.includes("busco") || lowerQuery.includes("properties") || lowerQuery.includes("looking")) {
+    const list = state.properties.slice(0, 3).map((p, i) => `${i+1}. *${p.title}* (${p.location.city}) - ${p.category}. ${p.plusvalia ? L('IA Score Alto', 'High AI Score') : L('Destacada', 'Featured')}`).join('\n');
+    return L(
+      "🏠 **Recomendaciones Inteligentes (Tiempo Real)**:\nBasado en nuestro inventario actual, te sugiero revisar:\n" + list + "\n\nPuedes navegar a la sección de **Comprar** o **Rentar** en el menú para ver la lista completa con mapa interactivo.",
+      "🏠 **Smart Recommendations (Real Time)**:\nBased on our current inventory, I suggest reviewing:\n" + list + "\n\nYou can visit **Buy** or **Rent** in the menu to see the full catalog with our interactive map."
+    );
   }
 
-  if (lowerQuery.includes("costo") || lowerQuery.includes("cuesta") || lowerQuery.includes("precio")) {
-    return "💵 **Estadística de Precios MudaT**:\n- CDMX Polanco: Promedio de **$85,000 MXN por m²**.\n- San Pedro NL: Promedio de **$95,000 MXN por m²**.\n- Guadalajara Providencia: Promedio de **$48,000 MXN por m²**.\n- Tulum Eco-chic: Promedio de **$3,200 USD por m²**.";
+  if (lowerQuery.includes("costo") || lowerQuery.includes("cuesta") || lowerQuery.includes("precio") || lowerQuery.includes("price") || lowerQuery.includes("cost")) {
+    return L(
+      "💵 **Estadística de Precios MudaT**:\n- CDMX Polanco: Promedio de **$85,000 MXN por m²**.\n- San Pedro NL: Promedio de **$95,000 MXN por m²**.\n- Guadalajara Providencia: Promedio de **$48,000 MXN por m²**.\n- Tulum Eco-chic: Promedio de **$3,200 USD por m²**.",
+      "💵 **MudaT Price Statistics**:\n- CDMX Polanco: Average **$85,000 MXN per m²**.\n- San Pedro NL: Average **$95,000 MXN per m²**.\n- Guadalajara Providencia: Average **$48,000 MXN per m²**.\n- Tulum Eco-chic: Average **$3,200 USD per m²**."
+    );
   }
 
-  return "🤖 Entendido. Como asistente inmobiliario de MudaT, mi IA puede analizar nuestro catálogo de " + state.properties.length + " propiedades, simular créditos, buscar opciones similares y proyectar plusvalías. ¿Cómo deseas proceder?";
+  return L(
+    "🤖 Entendido. Como asistente inmobiliario de MudaT, mi IA puede analizar nuestro catálogo de " + state.properties.length + " propiedades, simular créditos, buscar opciones similares y proyectar plusvalías. ¿Cómo deseas proceder?",
+    "🤖 Got it. As your MudaT real estate assistant, my AI can analyze our catalog of " + state.properties.length + " properties, simulate mortgages, find similar listings, and project appreciation. How would you like to proceed?"
+  );
 }
 
 // Start everything

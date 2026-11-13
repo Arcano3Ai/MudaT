@@ -65,7 +65,7 @@
       }
     }
   </script>
-  <link rel="stylesheet" href="./style.css?v=20261117">
+  <link rel="stylesheet" href="./style.css?v=20261118">
   <!-- Lucide Icons CDN -->
   <script src="https://unpkg.com/lucide@latest"></script>
 </head>
@@ -93,6 +93,12 @@
 
       <!-- Acciones de Usuario e Integraciones de Simulación SaaS -->
       <div class="header-actions">
+        <!-- Selector de Idioma ES / EN -->
+        <div class="lang-switcher-capsule" id="lang-switcher" title="Idioma / Language">
+          <button type="button" class="lang-btn active" id="lang-btn-es" data-lang="es">ES</button>
+          <button type="button" class="lang-btn" id="lang-btn-en" data-lang="en">EN</button>
+        </div>
+
         <!-- Modo Claro/Oscuro Conmutador Segmentado -->
         <div class="theme-switcher-capsule" id="theme-switcher" title="Cambiar Tema">
           <div class="theme-switcher-slider"></div>
@@ -246,6 +252,6 @@
   </div>
 
   <!-- App Entrypoint Script -->
-  <script type="module" src="./app.js?v=20261117"></script>
+  <script type="module" src="./app.js?v=20261118"></script>
 </body>
 </html>

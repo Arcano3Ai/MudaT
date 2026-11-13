@@ -9,6 +9,7 @@ import {
   formatDistance
 } from "../services/zoneService.js";
 import { calculateConvenienceIndex } from "../services/convenienceScore.js";
+import { L } from "../services/i18n.js";
 
 function escapeHtml(str) {
   return String(str ?? "")
@@ -21,16 +22,16 @@ function escapeHtml(str) {
 
 export function renderConoceLaZonaShell() {
   return `
-    <section class="conoce-zona-section" id="conoce-la-zona" aria-label="Conoce la zona">
+    <section class="conoce-zona-section" id="conoce-la-zona" aria-label="${L("Conoce la zona", "Explore the area")}">
       <div class="conoce-zona-header">
         <div class="conoce-zona-title-wrap">
-          <span class="conoce-zona-eyebrow">Entorno y servicios</span>
-          <h2 class="conoce-zona-title">CONOCE LA ZONA</h2>
-          <p class="conoce-zona-subtitle">Descubre todo lo que tienes cerca</p>
+          <span class="conoce-zona-eyebrow">${L("Entorno y servicios", "Surroundings & Services")}</span>
+          <h2 class="conoce-zona-title">${L("CONOCE LA ZONA", "EXPLORE THE AREA")}</h2>
+          <p class="conoce-zona-subtitle">${L("Descubre todo lo que tienes cerca", "Discover everything nearby")}</p>
         </div>
         <div class="conoce-zona-radius-wrap" id="cz-radius-controls">
-          <span class="cz-radius-label">Radio de exploración:</span>
-          <div class="cz-radius-pills" role="group" aria-label="Radio de exploración">
+          <span class="cz-radius-label">${L("Radio de exploración:", "Search radius:")}</span>
+          <div class="cz-radius-pills" role="group" aria-label="${L("Radio de exploración", "Search radius")}">
             <button type="button" class="cz-radius-btn" data-radius="500">500 m</button>
             <button type="button" class="cz-radius-btn" data-radius="1000">1 km</button>
             <button type="button" class="cz-radius-btn active" data-radius="1500">1.5 km</button>
@@ -42,7 +43,7 @@ export function renderConoceLaZonaShell() {
       <div id="cz-dynamic-root">
         <div class="cz-loading-state">
           <div class="cz-spinner"></div>
-          <p>Explorando comercios, escuelas, salud y servicios cercanos...</p>
+          <p>${L("Explorando comercios, escuelas, salud y servicios cercanos...", "Exploring nearby shops, schools, healthcare, and services...")}</p>
         </div>
       </div>
     </section>
@@ -59,8 +60,8 @@ export async function initConoceLaZona(prop) {
     root.innerHTML = `
       <div class="cz-unavailable-card">
         <div class="cz-unavailable-icon">📍</div>
-        <h3>Ubicación en proceso de verificación</h3>
-        <p>La ubicación geográfica de esta propiedad todavía no está disponible.</p>
+        <h3>${L("Ubicación en proceso de verificación", "Location under verification")}</h3>
+        <p>${L("La ubicación geográfica de esta propiedad todavía no está disponible.", "The geographic location of this property is not yet available.")}</p>
       </div>
     `;
     return;
@@ -80,14 +81,14 @@ export async function initConoceLaZona(prop) {
 
   function renderMainLayout() {
     root.innerHTML = `
-      <div class="cz-filters-bar" id="cz-filters-bar" role="group" aria-label="Filtros por categoría"></div>
+      <div class="cz-filters-bar" id="cz-filters-bar" role="group" aria-label="${L("Filtros por categoría", "Category filters")}"></div>
 
       <div class="cz-workspace-grid">
         <div class="cz-map-column">
           <div class="cz-map-card">
-            <div id="cz-map-canvas" class="cz-map-canvas" aria-label="Mapa interactivo de la zona"></div>
-            <button type="button" class="cz-recenter-btn" id="cz-recenter-btn" title="Centrar en la propiedad">
-              ⌖ Centrar propiedad
+            <div id="cz-map-canvas" class="cz-map-canvas" aria-label="${L("Mapa interactivo de la zona", "Interactive area map")}"></div>
+            <button type="button" class="cz-recenter-btn" id="cz-recenter-btn" title="${L("Centrar en la propiedad", "Center on property")}">
+              ⌖ ${L("Centrar propiedad", "Center property")}
             </button>
             <div class="cz-map-attribution" id="cz-map-attribution"></div>
           </div>
@@ -95,11 +96,11 @@ export async function initConoceLaZona(prop) {
           <div id="cz-place-detail-host"></div>
         </div>
 
-        <aside class="cz-sidebar-panel" aria-label="Amenidades cercanas">
+        <aside class="cz-sidebar-panel" aria-label="${L("Amenidades cercanas", "Nearby amenities")}">
           <div class="cz-sidebar-header">
             <div>
-              <h3>Amenidades cercanas</h3>
-              <p id="cz-sidebar-subtitle" class="cz-sidebar-subtitle">Ordenadas por proximidad</p>
+              <h3>${L("Amenidades cercanas", "Nearby amenities")}</h3>
+              <p id="cz-sidebar-subtitle" class="cz-sidebar-subtitle">${L("Ordenadas por proximidad", "Sorted by proximity")}</p>
             </div>
             <span class="cz-total-badge" id="cz-total-badge">0</span>
           </div>
@@ -141,7 +142,7 @@ export async function initConoceLaZona(prop) {
         const propMarker = new maps.Marker({
           position: origin,
           map,
-          title: prop.title || "Propiedad",
+          title: prop.title || L("Propiedad", "Property"),
           icon: {
             path: maps.SymbolPath.CIRCLE,
             scale: 11,
@@ -167,7 +168,7 @@ export async function initConoceLaZona(prop) {
         let poiMarkers = [];
         let routeLine = null;
 
-        if (attrEl) attrEl.textContent = "Datos cartográficos vía Google Maps Platform";
+        if (attrEl) attrEl.textContent = L("Datos cartográficos vía Google Maps Platform", "Map data via Google Maps Platform");
 
         return {
           recenter() {
@@ -238,31 +239,31 @@ export async function initConoceLaZona(prop) {
     }
 
     // Motor cartográfico abierto Leaflet + OpenStreetMap
-    const L = await loadLeafletAssets();
-    const map = L.map(canvas, {
+    const Leaflet = await loadLeafletAssets();
+    const map = Leaflet.map(canvas, {
       center: [origin.lat, origin.lng],
       zoom: 15,
       zoomControl: true,
       scrollWheelZoom: false
     });
 
-    L.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}", {
+    Leaflet.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}", {
       attribution: "Tiles &copy; Esri &mdash; OpenStreetMap contributors",
       maxZoom: 19
     }).addTo(map);
 
-    const propIcon = L.divIcon({
+    const propIcon = Leaflet.divIcon({
       className: "cz-leaflet-prop-icon",
       html: `<div class="cz-prop-pin"><span>🏠</span></div>`,
       iconSize: [38, 38],
       iconAnchor: [19, 19]
     });
 
-    L.marker([origin.lat, origin.lng], { icon: propIcon, zIndexOffset: 1000 })
+    Leaflet.marker([origin.lat, origin.lng], { icon: propIcon, zIndexOffset: 1000 })
       .addTo(map)
-      .bindTooltip(escapeHtml(prop.title || "Propiedad seleccionada"), { direction: "top" });
+      .bindTooltip(escapeHtml(prop.title || L("Propiedad seleccionada", "Selected property")), { direction: "top" });
 
-    const circle = L.circle([origin.lat, origin.lng], {
+    const circle = Leaflet.circle([origin.lat, origin.lng], {
       radius: currentRadius,
       color: "#c5a059",
       weight: 1.5,
@@ -271,10 +272,10 @@ export async function initConoceLaZona(prop) {
       fillOpacity: 0.08
     }).addTo(map);
 
-    const markersLayer = L.layerGroup().addTo(map);
+    const markersLayer = Leaflet.layerGroup().addTo(map);
     let routeLayer = null;
 
-    if (attrEl) attrEl.textContent = "Mapa interactivo con datos geográficos reales";
+    if (attrEl) attrEl.textContent = L("Mapa interactivo con datos geográficos reales", "Interactive map with real geographic data");
 
     setTimeout(() => map.invalidateSize(), 150);
 
@@ -296,7 +297,7 @@ export async function initConoceLaZona(prop) {
         }
         if (!Array.isArray(coords) || coords.length === 0) return;
         const latLngs = coords.map(([lng, lat]) => [lat, lng]);
-        routeLayer = L.polyline(latLngs, {
+        routeLayer = Leaflet.polyline(latLngs, {
           color: "#c5a059",
           weight: 4,
           opacity: 0.9,
@@ -314,13 +315,13 @@ export async function initConoceLaZona(prop) {
         for (const p of places) {
           const cat = ZONE_CATEGORIES.find((c) => c.id === p.category);
           const isSelected = selectedPlace?.id === p.id;
-          const icon = L.divIcon({
+          const icon = Leaflet.divIcon({
             className: "cz-leaflet-poi-icon",
             html: `<div class="cz-poi-pin ${isSelected ? "selected" : ""}" style="--cat-color:${cat?.color || "#c5a059"}"><span>${cat?.icon || "📍"}</span></div>`,
             iconSize: [30, 30],
             iconAnchor: [15, 15]
           });
-          const marker = L.marker([p.lat, p.lng], { icon });
+          const marker = Leaflet.marker([p.lat, p.lng], { icon });
           marker.bindTooltip(`${escapeHtml(p.name)} (${formatDistance(p.distance)})`, { direction: "top" });
           marker.on("click", () => onSelect(p));
           marker.addTo(markersLayer);
@@ -349,7 +350,7 @@ export async function initConoceLaZona(prop) {
     bar.innerHTML = `
       <button type="button" class="cz-filter-pill ${allActive ? "active" : ""}" data-cat="all">
         <span>✨</span>
-        <span>Todas</span>
+        <span>${L("Todas", "All")}</span>
         <span class="cz-pill-count">${allPlaces.length}</span>
       </button>
       ${ZONE_CATEGORIES.map((cat) => {
@@ -430,7 +431,7 @@ export async function initConoceLaZona(prop) {
     if (filtered.length === 0) {
       listEl.innerHTML = `
         <div class="cz-empty-list">
-          <p>No hay establecimientos visibles con los filtros actuales o dentro de este radio.</p>
+          <p>${L("No hay establecimientos visibles con los filtros actuales o dentro de este radio.", "No places visible with the current filters or within this radius.")}</p>
         </div>
       `;
       return;
@@ -495,12 +496,12 @@ export async function initConoceLaZona(prop) {
         <div class="cz-detail-top">
           <div class="cz-detail-heading">
             <span class="cz-detail-cat-badge" style="border-color: ${cat?.color || "#c5a059"}55; color: ${cat?.color || "#c5a059"}">
-              ${cat?.icon || "📍"} ${escapeHtml(cat?.label || "Lugar")}
+              ${cat?.icon || "📍"} ${escapeHtml(cat?.label || L("Lugar", "Place"))}
             </span>
             <h3 class="cz-detail-title">${escapeHtml(merged.name)}</h3>
-            <p class="cz-detail-distance">A ${formatDistance(merged.distance)} de la propiedad</p>
+            <p class="cz-detail-distance">${L(`A ${formatDistance(merged.distance)} de la propiedad`, `${formatDistance(merged.distance)} from the property`)}</p>
           </div>
-          <button type="button" class="cz-detail-close" id="cz-detail-close" aria-label="Cerrar tarjeta">✕</button>
+          <button type="button" class="cz-detail-close" id="cz-detail-close" aria-label="${L("Cerrar tarjeta", "Close card")}">✕</button>
         </div>
 
         ${
@@ -512,33 +513,33 @@ export async function initConoceLaZona(prop) {
         <div class="cz-detail-meta-grid">
           ${
             merged.address
-              ? `<div class="cz-meta-row"><strong>Dirección:</strong> <span>${escapeHtml(merged.address)}</span></div>`
+              ? `<div class="cz-meta-row"><strong>${L("Dirección:", "Address:")}</strong> <span>${escapeHtml(merged.address)}</span></div>`
               : ""
           }
           ${
             typeof merged.rating === "number"
-              ? `<div class="cz-meta-row"><strong>Calificación:</strong> <span>⭐ ${merged.rating.toFixed(1)}${merged.userRatingsTotal ? ` (${merged.userRatingsTotal} reseñas)` : ""}</span></div>`
+              ? `<div class="cz-meta-row"><strong>${L("Calificación:", "Rating:")}</strong> <span>⭐ ${merged.rating.toFixed(1)}${merged.userRatingsTotal ? ` (${merged.userRatingsTotal} ${L("reseñas", "reviews")})` : ""}</span></div>`
               : ""
           }
         </div>
 
         <div class="cz-travel-times">
-          <div class="cz-travel-title">Tiempos estimados de traslado</div>
+          <div class="cz-travel-title">${L("Tiempos estimados de traslado", "Estimated travel times")}</div>
           ${
             loading
-              ? `<p class="cz-travel-loading">Calculando rutas reales...</p>`
+              ? `<p class="cz-travel-loading">${L("Calculando rutas reales...", "Calculating real routes...")}</p>`
               : `
                 <div class="cz-travel-grid">
                   <div class="cz-travel-box">
                     <span class="cz-travel-icon">🚶</span>
-                    <span class="cz-travel-mode">Caminando</span>
-                    <strong>${routes.walking?.durationText || "No disponible"}</strong>
+                    <span class="cz-travel-mode">${L("Caminando", "Walking")}</span>
+                    <strong>${routes.walking?.durationText || L("No disponible", "Unavailable")}</strong>
                     ${routes.walking?.distanceText ? `<small>${routes.walking.distanceText}</small>` : ""}
                   </div>
                   <div class="cz-travel-box">
                     <span class="cz-travel-icon">🚗</span>
-                    <span class="cz-travel-mode">Automóvil</span>
-                    <strong>${routes.driving?.durationText || "No disponible"}</strong>
+                    <span class="cz-travel-mode">${L("Automóvil", "Driving")}</span>
+                    <strong>${routes.driving?.durationText || L("No disponible", "Unavailable")}</strong>
                     ${routes.driving?.distanceText ? `<small>${routes.driving.distanceText}</small>` : ""}
                   </div>
                   ${
@@ -546,7 +547,7 @@ export async function initConoceLaZona(prop) {
                       ? `
                         <div class="cz-travel-box">
                           <span class="cz-travel-icon">🚌</span>
-                          <span class="cz-travel-mode">Transporte público</span>
+                          <span class="cz-travel-mode">${L("Transporte público", "Public transit")}</span>
                           <strong>${routes.transit.durationText}</strong>
                           ${routes.transit.distanceText ? `<small>${routes.transit.distanceText}</small>` : ""}
                         </div>
@@ -562,13 +563,13 @@ export async function initConoceLaZona(prop) {
           Array.isArray(merged.reviews) && merged.reviews.length > 0
             ? `
               <div class="cz-detail-reviews">
-                <div class="cz-travel-title">Reseñas destacadas</div>
+                <div class="cz-travel-title">${L("Reseñas destacadas", "Featured reviews")}</div>
                 ${merged.reviews
                   .map(
                     (rv) => `
                       <blockquote class="cz-review-item">
                         <div class="cz-review-head">
-                          <strong>${escapeHtml(rv.author || "Usuario")}</strong>
+                          <strong>${escapeHtml(rv.author || L("Usuario", "User"))}</strong>
                           <span>⭐ ${rv.rating ?? ""} ${rv.time ? `• ${escapeHtml(rv.time)}` : ""}</span>
                         </div>
                         <p>${escapeHtml(rv.text || "")}</p>
@@ -583,7 +584,7 @@ export async function initConoceLaZona(prop) {
 
         <div class="cz-detail-actions">
           <a href="${escapeHtml(directionsUrl)}" target="_blank" rel="noopener noreferrer" class="cz-directions-btn">
-            🧭 Obtener indicaciones
+            🧭 ${L("Obtener indicaciones", "Get directions")}
           </a>
         </div>
       </div>
@@ -640,15 +641,18 @@ export async function initConoceLaZona(prop) {
         </div>
         <div class="cz-conv-intro">
           <div class="cz-conv-title-row">
-            <h3>Índice de Conveniencia de la Ubicación</h3>
+            <h3>${L("Índice de Conveniencia de la Ubicación", "Location Convenience Index")}</h3>
             <span class="cz-conv-tier">${escapeHtml(scoreData.tierLabel)}</span>
           </div>
           <p class="cz-conv-desc">
-            Evaluación propia de MudaT calculada con <strong>${scoreData.totalPlaces}</strong> lugares reales encontrados en un radio de ${formatDistance(currentRadius)} (${scoreData.coveredCategories} de ${scoreData.totalCategories} categorías cubiertas).
+            ${L(
+              `Evaluación propia de MudaT calculada con <strong>${scoreData.totalPlaces}</strong> lugares reales encontrados en un radio de ${formatDistance(currentRadius)} (${scoreData.coveredCategories} de ${scoreData.totalCategories} categorías cubiertas).`,
+              `MudaT's proprietary score calculated from <strong>${scoreData.totalPlaces}</strong> real places found within a ${formatDistance(currentRadius)} radius (${scoreData.coveredCategories} of ${scoreData.totalCategories} categories covered).`
+            )}
           </p>
           ${
             scoreData.isLimited
-              ? `<div class="cz-limited-alert">⚠️ Evaluación limitada: se detectaron pocos registros cartográficos en este radio; prueba ampliar el radio de exploración.</div>`
+              ? `<div class="cz-limited-alert">⚠️ ${L("Evaluación limitada: se detectaron pocos registros cartográficos en este radio; prueba ampliar el radio de exploración.", "Limited evaluation: few map records were detected within this radius; try expanding the search radius.")}</div>`
               : ""
           }
         </div>
@@ -673,12 +677,18 @@ export async function initConoceLaZona(prop) {
       </div>
 
       <details class="cz-conv-methodology">
-        <summary>¿Cómo se obtiene esta puntuación?</summary>
+        <summary>${L("¿Cómo se obtiene esta puntuación?", "How is this score calculated?")}</summary>
         <p>
-          El índice combina tres criterios objetivos: <strong>Disponibilidad (40%)</strong> según la cantidad de servicios cercanos por categoría, <strong>Proximidad (35%)</strong> según la cercanía real del establecimiento más próximo de cada rubro, y <strong>Diversidad (25%)</strong> según cuántas categorías distintas existen en el radio seleccionado.
+          ${L(
+            "El índice combina tres criterios objetivos: <strong>Disponibilidad (40%)</strong> según la cantidad de servicios cercanos por categoría, <strong>Proximidad (35%)</strong> según la cercanía real del establecimiento más próximo de cada rubro, y <strong>Diversidad (25%)</strong> según cuántas categorías distintas existen en el radio seleccionado.",
+            "The index combines three objective criteria: <strong>Availability (40%)</strong> based on the number of nearby services per category, <strong>Proximity (35%)</strong> based on the actual distance to the nearest place in each category, and <strong>Diversity (25%)</strong> based on how many distinct categories exist within the selected radius."
+          )}
         </p>
         <p class="cz-conv-disclaimer">
-          Nota: Este indicador es una referencia informativa propia de MudaT basada en datos geográficos abiertos y no constituye una calificación oficial de Google ni una certificación inmobiliaria oficial.
+          ${L(
+            "Nota: Este indicador es una referencia informativa propia de MudaT basada en datos geográficos abiertos y no constituye una calificación oficial de Google ni una certificación inmobiliaria oficial.",
+            "Note: This indicator is MudaT's own informational reference based on open geographic data and does not constitute an official Google rating or an official real estate certification."
+          )}
         </p>
       </details>
     `;
@@ -702,7 +712,7 @@ export async function initConoceLaZona(prop) {
       if (listEl) {
         listEl.innerHTML = `
           <div class="cz-empty-list">
-            <p>No fue posible obtener los establecimientos cercanos en este momento. Intenta nuevamente en unos segundos.</p>
+            <p>${L("No fue posible obtener los establecimientos cercanos en este momento. Intenta nuevamente en unos segundos.", "Could not load nearby places right now. Please try again in a few seconds.")}</p>
           </div>
         `;
       }

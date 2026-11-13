@@ -1,4 +1,5 @@
 import { getCurrentUser, switchUserRole, authenticateCredentials, logout } from "../services/auth.js";
+import { getLang, setLang, applyStaticTranslations, L } from "../services/i18n.js";
 
 /**
  * Inicializa los eventos y comportamientos del Header:
@@ -50,23 +51,45 @@ export function initHeader(state, onAuthChangeCallback) {
   const savedTheme = localStorage.getItem("mudat_theme") || "dark";
   setTheme(savedTheme);
 
+  // --- SELECTOR DE IDIOMA ES / EN ---
+  const langEsBtn = document.getElementById("lang-btn-es");
+  const langEnBtn = document.getElementById("lang-btn-en");
+  langEsBtn?.addEventListener("click", () => setLang("es"));
+  langEnBtn?.addEventListener("click", () => setLang("en"));
+  applyStaticTranslations(getLang());
+
   // --- MENÚ MÓVIL ---
   if (mobileMenuToggle && navMenu) {
-    mobileMenuToggle.addEventListener("click", () => {
+    const closeMobileMenu = () => {
+      navMenu.classList.remove("active");
+      mobileMenuToggle.innerHTML = `<i data-lucide="menu"></i>`;
+      if (window.lucide) window.lucide.createIcons();
+    };
+
+    mobileMenuToggle.addEventListener("click", (e) => {
+      e.stopPropagation();
       navMenu.classList.toggle("active");
       const isActive = navMenu.classList.contains("active");
-      mobileMenuToggle.innerHTML = isActive 
-        ? `<i data-lucide="x"></i>` 
+      mobileMenuToggle.innerHTML = isActive
+        ? `<i data-lucide="x"></i>`
         : `<i data-lucide="menu"></i>`;
       if (window.lucide) window.lucide.createIcons();
     });
 
     navMenu.querySelectorAll(".nav-item").forEach(item => {
-      item.addEventListener("click", () => {
-        navMenu.classList.remove("active");
-        mobileMenuToggle.innerHTML = `<i data-lucide="menu"></i>`;
-        if (window.lucide) window.lucide.createIcons();
-      });
+      item.addEventListener("click", closeMobileMenu);
+    });
+
+    document.addEventListener("click", (e) => {
+      if (navMenu.classList.contains("active") && !navMenu.contains(e.target) && !mobileMenuToggle.contains(e.target)) {
+        closeMobileMenu();
+      }
+    });
+
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && navMenu.classList.contains("active")) {
+        closeMobileMenu();
+      }
     });
   }
 
@@ -101,10 +124,10 @@ export function initHeader(state, onAuthChangeCallback) {
   loginBtn?.addEventListener("click", () => {
     // Si ya está logueado, al hacer clic podemos desloguear (Logout)
     if (state.currentUser) {
-      if (confirm("¿Deseas cerrar tu sesión premium en MudaT?")) {
+      if (confirm(L("¿Deseas cerrar tu sesión premium en MudaT?", "Do you want to sign out of your MudaT premium session?"))) {
         logout();
         state.currentUser = null;
-        alert("Sesión finalizada. Has vuelto al modo público.");
+        alert(L("Sesión finalizada. Has vuelto al modo público.", "Signed out. You are back in public mode."));
       }
     } else {
       openModal();
@@ -131,7 +154,10 @@ export function initHeader(state, onAuthChangeCallback) {
 
     state.currentUser = result.user;
     closeModal();
-    alert(`¡Bienvenida de vuelta, ${result.user.name}! Sesión iniciada de forma segura.`);
+    alert(L(
+      `¡Bienvenida de vuelta, ${result.user.name}! Sesión iniciada de forma segura.`,
+      `Welcome back, ${result.user.name}! Signed in securely.`
+    ));
   });
 
   // Clics en Perfiles Demo de Acceso Rápido
@@ -141,7 +167,10 @@ export function initHeader(state, onAuthChangeCallback) {
       const user = switchUserRole(role);
       state.currentUser = user;
       closeModal();
-      alert(`Entrando en modo de demostración comercial como: ${user.name} (${user.role.toUpperCase()})`);
+      alert(L(
+        `Entrando en modo de demostración comercial como: ${user.name} (${user.role.toUpperCase()})`,
+        `Entering commercial demo mode as: ${user.name} (${user.role.toUpperCase()})`
+      ));
     });
   });
 
@@ -160,19 +189,19 @@ export function updateHeaderUI(state) {
   state.currentUser = user;
 
   if (user) {
-    // Si el usuario ha iniciado sesión, mostramos su avatar y nombre en un badge premium
+    loginBtn.dataset.loggedIn = "1";
     loginBtn.className = "header-user-badge";
     loginBtn.innerHTML = `
       <img src="${user.avatar}" alt="${user.name}">
       <span>${user.name.split(' ')[0]}</span>
-      <i data-lucide="log-out" style="width:14px; height:14px; margin-left: 0.5rem; opacity:0.7;" title="Cerrar Sesión"></i>
+      <i data-lucide="log-out" style="width:14px; height:14px; margin-left: 0.5rem; opacity:0.7;" title="${L('Cerrar Sesión', 'Sign Out')}"></i>
     `;
   } else {
-    // Si no ha iniciado sesión, mostramos el botón estático de login
+    delete loginBtn.dataset.loggedIn;
     loginBtn.className = "btn-login-premium";
     loginBtn.innerHTML = `
       <i data-lucide="user" class="icon-inline"></i>
-      <span>Iniciar sesión</span>
+      <span>${L("Iniciar sesión", "Sign in")}</span>
     `;
   }
 

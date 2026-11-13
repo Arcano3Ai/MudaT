@@ -9,14 +9,16 @@
  * calificación oficial de Google ni un indicador inmobiliario certificado.
  */
 
+import { L } from "./i18n.js";
+
 const SCORE_CATEGORIES = [
-  { key: "compras", label: "Comercio" },
-  { key: "educacion", label: "Educación" },
-  { key: "salud", label: "Salud" },
-  { key: "gastronomia", label: "Gastronomía" },
-  { key: "recreacion", label: "Recreación" },
-  { key: "deporte", label: "Deporte y bienestar" },
-  { key: "movilidad", label: "Movilidad" }
+  { key: "compras", get label() { return L("Compras", "Shopping"); } },
+  { key: "educacion", get label() { return L("Educación", "Education"); } },
+  { key: "salud", get label() { return L("Salud", "Healthcare"); } },
+  { key: "gastronomia", get label() { return L("Gastronomía", "Dining"); } },
+  { key: "recreacion", get label() { return L("Recreación", "Recreation"); } },
+  { key: "deporte", get label() { return L("Deporte y bienestar", "Sports & Wellness"); } },
+  { key: "movilidad", get label() { return L("Movilidad", "Transit"); } }
 ];
 
 export function calculateConvenienceIndex(places, radiusMeters = 1500) {
@@ -69,11 +71,11 @@ export function calculateConvenienceIndex(places, radiusMeters = 1500) {
     diversityScore * 0.25
   );
 
-  let tierLabel = "Entorno Básico";
-  if (isLimited) tierLabel = "Evaluación limitada";
-  else if (overall >= 80) tierLabel = "Ubicación Excepcional";
-  else if (overall >= 60) tierLabel = "Muy Buena Conectividad";
-  else if (overall >= 40) tierLabel = "Conveniencia Moderada";
+  let tierLabel = L("Entorno Básico", "Basic Surroundings");
+  if (isLimited) tierLabel = L("Evaluación limitada", "Limited evaluation");
+  else if (overall >= 80) tierLabel = L("Ubicación Excepcional", "Exceptional Location");
+  else if (overall >= 60) tierLabel = L("Muy Buena Conectividad", "Very Good Connectivity");
+  else if (overall >= 40) tierLabel = L("Conveniencia Moderada", "Moderate Convenience");
 
   return {
     overall: totalPlaces === 0 ? 0 : overall,

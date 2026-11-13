@@ -1,5 +1,6 @@
 import { updateUserProfile } from "../services/auth.js";
 import { renderPropertyCard } from "../components/PropertyCard.js";
+import { L, tCategory, formatCurrency } from "../services/i18n.js";
 
 export async function renderSearch(state) {
   const html = `
@@ -12,28 +13,28 @@ export async function renderSearch(state) {
         <div class="advanced-filters-bar glass-premium glow-brand fade-in">
           <h3 class="filters-bar-title">
             <i data-lucide="sliders-horizontal" class="icon-inline icon-lg color-brand"></i>
-            Filtros Avanzados
+            ${L("Filtros Avanzados", "Advanced Filters")}
           </h3>
           
           <div class="filters-row">
             <div class="filter-group">
-              <label>Categoría</label>
+              <label>${L("Categoría", "Category")}</label>
               <select class="filter-select" id="filter-category">
-                <option value="Comprar" ${state.searchFilters.category === "Comprar" ? "selected" : ""}>Comprar</option>
-                <option value="Rentar" ${state.searchFilters.category === "Rentar" ? "selected" : ""}>Rentar</option>
-                <option value="Preventa" ${state.searchFilters.category === "Preventa" ? "selected" : ""}>Preventa</option>
-                <option value="Terrenos" ${state.searchFilters.category === "Terrenos" ? "selected" : ""}>Terrenos</option>
-                <option value="Oficinas" ${state.searchFilters.category === "Oficinas" ? "selected" : ""}>Oficinas</option>
-                <option value="Locales" ${state.searchFilters.category === "Locales" ? "selected" : ""}>Locales</option>
-                <option value="Bodegas" ${state.searchFilters.category === "Bodegas" ? "selected" : ""}>Bodegas</option>
-                <option value="Industrial" ${state.searchFilters.category === "Industrial" ? "selected" : ""}>Industrial</option>
+                <option value="Comprar" ${state.searchFilters.category === "Comprar" ? "selected" : ""}>${tCategory("Comprar")}</option>
+                <option value="Rentar" ${state.searchFilters.category === "Rentar" ? "selected" : ""}>${tCategory("Rentar")}</option>
+                <option value="Preventa" ${state.searchFilters.category === "Preventa" ? "selected" : ""}>${tCategory("Preventa")}</option>
+                <option value="Terrenos" ${state.searchFilters.category === "Terrenos" ? "selected" : ""}>${tCategory("Terrenos")}</option>
+                <option value="Oficinas" ${state.searchFilters.category === "Oficinas" ? "selected" : ""}>${tCategory("Oficinas")}</option>
+                <option value="Locales" ${state.searchFilters.category === "Locales" ? "selected" : ""}>${tCategory("Locales")}</option>
+                <option value="Bodegas" ${state.searchFilters.category === "Bodegas" ? "selected" : ""}>${tCategory("Bodegas")}</option>
+                <option value="Industrial" ${state.searchFilters.category === "Industrial" ? "selected" : ""}>${tCategory("Industrial")}</option>
               </select>
             </div>
 
             <div class="filter-group">
-              <label>Ciudad</label>
+              <label>${L("Ciudad", "City")}</label>
               <select class="filter-select" id="filter-city">
-                <option value="">Todas</option>
+                <option value="">${L("Todas", "All")}</option>
                 <option value="CDMX" ${state.searchFilters.city === "CDMX" ? "selected" : ""}>CDMX</option>
                 <option value="San Pedro" ${state.searchFilters.city === "San Pedro" ? "selected" : ""}>San Pedro (MTY)</option>
                 <option value="Guadalajara" ${state.searchFilters.city === "Guadalajara" ? "selected" : ""}>Guadalajara</option>
@@ -43,14 +44,14 @@ export async function renderSearch(state) {
             </div>
 
             <div class="filter-group">
-              <label>Precio Máximo</label>
-              <input type="number" class="filter-input" id="filter-price-max" placeholder="Ej. 10,000,000" value="${state.searchFilters.budget || ''}">
+              <label>${L("Precio Máximo", "Max Price")}</label>
+              <input type="number" class="filter-input" id="filter-price-max" placeholder="${L("Ej. 10,000,000", "e.g. 10,000,000")}" value="${state.searchFilters.budget || ''}">
             </div>
 
             <div class="filter-group">
-              <label>Recámaras</label>
+              <label>${L("Recámaras", "Bedrooms")}</label>
               <select class="filter-select" id="filter-bedrooms">
-                <option value="">Cualquiera</option>
+                <option value="">${L("Cualquiera", "Any")}</option>
                 <option value="1" ${state.searchFilters.rooms === "1" ? "selected" : ""}>1+</option>
                 <option value="2" ${state.searchFilters.rooms === "2" ? "selected" : ""}>2+</option>
                 <option value="3" ${state.searchFilters.rooms === "3" ? "selected" : ""}>3+</option>
@@ -59,9 +60,9 @@ export async function renderSearch(state) {
             </div>
 
             <div class="filter-group">
-              <label>Baños</label>
+              <label>${L("Baños", "Bathrooms")}</label>
               <select class="filter-select" id="filter-bathrooms">
-                <option value="">Cualquiera</option>
+                <option value="">${L("Cualquiera", "Any")}</option>
                 <option value="1">1+</option>
                 <option value="2">2+</option>
                 <option value="3">3+</option>
@@ -72,22 +73,22 @@ export async function renderSearch(state) {
 
           <!-- Filtros de Amenidades y Cercanías (Checkboxes) -->
           <div class="checkbox-filters">
-            <label class="checkbox-label"><input type="checkbox" class="amenity-cb" value="Alberca"> <span>Alberca 🏊‍♂️</span></label>
-            <label class="checkbox-label"><input type="checkbox" class="amenity-cb" value="Seguridad 24/7"> <span>Seguridad 🛡️</span></label>
-            <label class="checkbox-label"><input type="checkbox" class="amenity-cb" value="Mascotas permitidas"> <span>Mascotas 🐾</span></label>
-            <label class="checkbox-label"><input type="checkbox" class="amenity-cb" value="Gimnasio"> <span>Gimnasio 🏋️‍♂️</span></label>
-            <label class="checkbox-label"><input type="checkbox" id="filter-schools"> <span>Escuelas 🎓</span></label>
-            <label class="checkbox-label"><input type="checkbox" id="filter-hospitals"> <span>Hospitales 🏥</span></label>
-            <label class="checkbox-label"><input type="checkbox" id="filter-malls"> <span>Plazas 🛍️</span></label>
-            <label class="checkbox-label"><input type="checkbox" id="filter-transport"> <span>Transporte 🚍</span></label>
+            <label class="checkbox-label"><input type="checkbox" class="amenity-cb" value="Alberca"> <span>${L("Alberca", "Pool")} 🏊‍♂️</span></label>
+            <label class="checkbox-label"><input type="checkbox" class="amenity-cb" value="Seguridad 24/7"> <span>${L("Seguridad", "Security")} 🛡️</span></label>
+            <label class="checkbox-label"><input type="checkbox" class="amenity-cb" value="Mascotas permitidas"> <span>${L("Mascotas", "Pets Allowed")} 🐾</span></label>
+            <label class="checkbox-label"><input type="checkbox" class="amenity-cb" value="Gimnasio"> <span>${L("Gimnasio", "Gym")} 🏋️‍♂️</span></label>
+            <label class="checkbox-label"><input type="checkbox" id="filter-schools"> <span>${L("Escuelas", "Schools")} 🎓</span></label>
+            <label class="checkbox-label"><input type="checkbox" id="filter-hospitals"> <span>${L("Hospitales", "Hospitals")} 🏥</span></label>
+            <label class="checkbox-label"><input type="checkbox" id="filter-malls"> <span>${L("Plazas", "Shopping")} 🛍️</span></label>
+            <label class="checkbox-label"><input type="checkbox" id="filter-transport"> <span>${L("Transporte", "Transit")} 🚍</span></label>
           </div>
         </div>
 
         <!-- Encabezado de Resultados -->
         <div class="filters-header-row">
-          <h2 id="results-count-title">Buscando propiedades...</h2>
+          <h2 id="results-count-title">${L("Buscando propiedades...", "Searching properties...")}</h2>
           <button class="btn btn-outline btn-sm" id="save-search-btn">
-            <i data-lucide="bell" class="icon-inline icon-sm"></i> Guardar Búsqueda
+            <i data-lucide="bell" class="icon-inline icon-sm"></i> ${L("Guardar Búsqueda", "Save Search")}
           </button>
         </div>
 
@@ -164,7 +165,7 @@ export async function renderSearch(state) {
         
         // Validar todas las amenidades seleccionadas
         for (const am of selectedAmenities) {
-          if (!prop.amenities.includes(am)) return false;
+          if (!prop.amenities?.includes(am)) return false;
         }
 
         // Validar cercanías
@@ -177,7 +178,7 @@ export async function renderSearch(state) {
       });
 
       // Actualizar título
-      resultsCountTitle.textContent = `${filtered.length} Inmuebles Encontrados`;
+      resultsCountTitle.textContent = `${filtered.length} ${L("Inmuebles Encontrados", "Properties Found")}`;
 
       // Renderizar Lista de Tarjetas
       renderCardsList(filtered);
@@ -207,8 +208,8 @@ export async function renderSearch(state) {
         gridMount.innerHTML = `
           <div class="no-results-card">
             <i data-lucide="search-code" class="no-results-icon"></i>
-            <h3>No encontramos propiedades</h3>
-            <p>Intenta flexibilizar los filtros de precio o amenidades.</p>
+            <h3>${L("No encontramos propiedades", "No properties found")}</h3>
+            <p>${L("Intenta flexibilizar los filtros de precio o amenidades.", "Try adjusting your price or amenity filters.")}</p>
           </div>
         `;
         if (window.lucide) window.lucide.createIcons();
@@ -241,7 +242,7 @@ export async function renderSearch(state) {
           e.preventDefault();
           e.stopPropagation();
           if (!appState.currentUser) {
-            alert("Inicia sesión para guardar favoritos.");
+            alert(L("Inicia sesión para guardar favoritos.", "Sign in to save favorites."));
             return;
           }
           const id = btn.getAttribute("data-id");
@@ -265,22 +266,22 @@ export async function renderSearch(state) {
       const isSanPedro = propertiesList.some(p => p.location.city === "San Pedro" || p.location.city === "San Pedro Garza García");
       const isTulum = propertiesList.some(p => p.location.city === "Tulum");
       
-      let districtLabel = "ZONA POLANCO / REFORMA";
+      let districtLabel = L("ZONA POLANCO / REFORMA", "POLANCO / REFORMA AREA");
       let street1 = "AV. PASEO DE LA REFORMA";
       let street2 = "AV. CAMPOS ELÍSEOS";
-      let landmarkLabel = "BOSQUE DE CHAPULTEPEC";
+      let landmarkLabel = L("BOSQUE DE CHAPULTEPEC", "CHAPULTEPEC PARK");
       let bgMapWater = "rgba(197, 160, 89, 0.1)";
 
       if (isSanPedro) {
         districtLabel = "SAN PEDRO GARZA GARCÍA";
         street1 = "AV. JOSÉ VASCONCELOS";
         street2 = "AV. ALFONSO REYES";
-        landmarkLabel = "PARQUE CHIPINQUE (RESERVA)";
+        landmarkLabel = L("PARQUE CHIPINQUE (RESERVA)", "CHIPINQUE PARK (RESERVE)");
       } else if (isTulum) {
-        districtLabel = "ZONA ECO-CHIC ALDEA ZAMA";
-        street1 = "AV. COBA (ACCESO PLAYA)";
+        districtLabel = L("ZONA ECO-CHIC ALDEA ZAMA", "ECO-CHIC ALDEA ZAMA AREA");
+        street1 = L("AV. COBA (ACCESO PLAYA)", "COBA AVE. (BEACH ACCESS)");
         street2 = "AV. BOCA PAILA";
-        landmarkLabel = "PARQUE NACIONAL TULUM";
+        landmarkLabel = L("PARQUE NACIONAL TULUM", "TULUM NATIONAL PARK");
         bgMapWater = "rgba(6, 182, 212, 0.15)"; /* Turquesa del Caribe */
       }
 
@@ -336,11 +337,11 @@ export async function renderSearch(state) {
           </g>
           
           <g transform="rotate(-90, 352, 220)">
-            <text x="352" y="220" font-family="Plus Jakarta Sans, sans-serif" font-size="7" fill="var(--text-muted)" font-weight="600" letter-spacing="0.05em">AV. CIRCUNVALACIÓN</text>
+            <text x="352" y="220" font-family="Plus Jakarta Sans, sans-serif" font-size="7" fill="var(--text-muted)" font-weight="600" letter-spacing="0.05em">${L("AV. CIRCUNVALACIÓN", "CIRCUNVALACIÓN AVE.")}</text>
           </g>
           
           <text x="10" y="184" font-family="Plus Jakarta Sans, sans-serif" font-size="7" fill="var(--text-muted)" font-weight="600" letter-spacing="0.05em">${street1}</text>
-          <text x="10" y="404" font-family="Plus Jakarta Sans, sans-serif" font-size="7" fill="var(--text-muted)" font-weight="600" letter-spacing="0.05em">ANILLO PERIFÉRICO</text>
+          <text x="10" y="404" font-family="Plus Jakarta Sans, sans-serif" font-size="7" fill="var(--text-muted)" font-weight="600" letter-spacing="0.05em">${L("ANILLO PERIFÉRICO", "PERIFÉRICO RING ROAD")}</text>
         </svg>
       `;
 
@@ -414,22 +415,18 @@ export async function renderSearch(state) {
 
     // Mostrar modal informativo en el mapa
     function showInfoWindow(prop) {
-      const formattedPrice = new Intl.NumberFormat('es-MX', {
-        style: 'currency',
-        currency: prop.currency,
-        maximumFractionDigits: 0
-      }).format(prop.price);
+      const formattedPrice = formatCurrency(prop.price, prop.currency || "MXN");
 
       infoWindow.innerHTML = `
         <button id="close-info-window" class="info-window-close-btn">
           <i data-lucide="x" class="icon-inline icon-md"></i>
         </button>
-        <img src="${prop.images[0]}" alt="${prop.title}" class="info-window-img">
+        <img src="${prop.images?.[0] || ""}" alt="${prop.title}" class="info-window-img">
         <h4 class="info-window-title">${prop.title}</h4>
-        <p class="info-window-meta">${prop.location.neighborhood}, ${prop.location.city}</p>
+        <p class="info-window-meta">${[prop.location?.neighborhood, prop.location?.city].filter(Boolean).join(", ")}</p>
         <div class="info-window-footer">
           <span class="info-window-price">${formattedPrice}</span>
-          <a href="#propiedad/${prop.id}" class="btn btn-primary info-window-btn">Ver Detalles</a>
+          <a href="#propiedad/${prop.id}" class="btn btn-primary info-window-btn">${L("Ver Detalles", "View Details")}</a>
         </div>
       `;
       infoWindow.classList.add("active");
@@ -445,16 +442,16 @@ export async function renderSearch(state) {
     // Guardar búsqueda activa
     saveSearchBtn.addEventListener("click", () => {
       if (!appState.currentUser) {
-        alert("Debes iniciar sesión para guardar buscas.");
+        alert(L("Debes iniciar sesión para guardar búsquedas.", "You must sign in to save searches."));
         return;
       }
       const category = filterCategory.value;
-      const city = filterCity.value || "México";
+      const city = filterCity.value || L("México", "Mexico");
       const savedSearches = appState.currentUser.savedSearches || [];
       
       const newSearch = {
         id: `s-${Date.now()}`,
-        name: `${category} en ${city} (${filterPriceMax.value ? 'Hasta $' + filterPriceMax.value : 'Cualquier precio'})`,
+        name: `${tCategory(category)} ${L("en", "in")} ${city} (${filterPriceMax.value ? L("Hasta", "Up to") + " $" + filterPriceMax.value : L("Cualquier precio", "Any price")})`,
         query: {
           category,
           city,
@@ -465,24 +462,8 @@ export async function renderSearch(state) {
       savedSearches.push(newSearch);
       appState.currentUser.savedSearches = savedSearches;
       updateUserProfile(appState.currentUser);
-      alert("¡Búsqueda guardada exitosamente! Recibirás alertas automatizadas en tu perfil.");
+      alert(L("¡Búsqueda guardada exitosamente! Recibirás alertas automatizadas en tu perfil.", "Search saved successfully! You will receive automated alerts in your profile."));
     });
-
-    // Enlazar listeners para cambios de filtro
-    filterCategory.addEventListener("change", applyFilters);
-    filterCity.addEventListener("change", applyFilters);
-    filterPriceMax.addEventListener("input", applyFilters);
-    filterBedrooms.addEventListener("change", applyFilters);
-    filterBathrooms.addEventListener("change", applyFilters);
-    
-    amenityCbs.forEach(cb => cb.addEventListener("change", applyFilters));
-    cbSchools.addEventListener("change", applyFilters);
-    cbHospitals.addEventListener("change", applyFilters);
-    cbMalls.addEventListener("change", applyFilters);
-    cbTransport.addEventListener("change", applyFilters);
-
-    // Cargar por primera vez
-    applyFilters();
   }
 
   return { html, init };

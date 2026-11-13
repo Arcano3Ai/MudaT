@@ -1,4 +1,5 @@
 import { updateUserProfile } from "../services/auth.js";
+import { L, formatCurrency } from "../services/i18n.js";
 
 export async function renderCalculatorView(state) {
   const html = `
@@ -6,82 +7,82 @@ export async function renderCalculatorView(state) {
       <div class="calculator-container-max">
         
         <div class="calculator-header">
-          <p class="section-tagline">Simulador Financiero</p>
-          <h2>Calculadora Hipotecaria Avanzada</h2>
-          <p>Calcula tus aportaciones mensuales, desglosa el pago de capital e interés y simula tu tabla de amortización completa en segundos.</p>
+          <p class="section-tagline">${L("Simulador Financiero", "Financial Simulator")}</p>
+          <h2>${L("Calculadora Hipotecaria Avanzada", "Advanced Mortgage Calculator")}</h2>
+          <p>${L("Calcula tus aportaciones mensuales, desglosa el pago de capital e interés y simula tu tabla de amortización completa en segundos.", "Calculate your monthly payments, break down principal and interest, and simulate your full amortization schedule in seconds.")}</p>
         </div>
 
         <div class="calculator-split">
           
           <!-- Entradas del Simulador -->
           <div class="calculator-input-card glass-premium">
-            <h3>1. Parámetros del Crédito</h3>
+            <h3>${L("1. Parámetros del Crédito", "1. Loan Parameters")}</h3>
             
             <div class="calculator-input-group-stack">
               <div class="filter-group">
-                <label>Valor de la Propiedad ($ MXN)</label>
+                <label>${L("Valor de la Propiedad ($ MXN)", "Property Value ($ MXN)")}</label>
                 <input type="number" class="filter-input" id="sim-price" value="5000000" step="50000">
               </div>
 
               <div class="filter-group">
-                <label>Enganche (%)</label>
+                <label>${L("Enganche (%)", "Down Payment (%)")}</label>
                 <input type="number" class="filter-input" id="sim-down-pct" value="20" min="10" max="90">
               </div>
 
               <div class="calculator-grid-half">
                 <div class="filter-group">
-                  <label>Tasa Anual (%)</label>
+                  <label>${L("Tasa Anual (%)", "Annual Rate (%)")}</label>
                   <input type="number" class="filter-input" id="sim-rate" value="10.25" step="0.05">
                 </div>
                 <div class="filter-group">
-                  <label>Plazo (Años)</label>
+                  <label>${L("Plazo (Años)", "Term (Years)")}</label>
                   <select class="filter-select" id="sim-years">
-                    <option value="5">5 Años</option>
-                    <option value="10">10 Años</option>
-                    <option value="15">15 Años</option>
-                    <option value="20" selected>20 Años</option>
-                    <option value="30">30 Años</option>
+                    <option value="5">5 ${L("Años", "Years")}</option>
+                    <option value="10">10 ${L("Años", "Years")}</option>
+                    <option value="15">15 ${L("Años", "Years")}</option>
+                    <option value="20" selected>20 ${L("Años", "Years")}</option>
+                    <option value="30">30 ${L("Años", "Years")}</option>
                   </select>
                 </div>
               </div>
               
               <div class="calculator-input-footer-summary">
                 <div class="calculator-input-footer-row">
-                  <span>Enganche Requerido:</span>
+                  <span>${L("Enganche Requerido:", "Required Down Payment:")}</span>
                   <strong id="sim-down-cash">$0</strong>
                 </div>
                 <div class="calculator-input-footer-row">
-                  <span>Monto Total del Crédito:</span>
+                  <span>${L("Monto Total del Crédito:", "Total Loan Amount:")}</span>
                   <strong id="sim-loan-principal">$0</strong>
                 </div>
               </div>
 
-              <button class="btn btn-primary btn-full-width margin-top-sm" id="sim-calc-btn">Recalcular Amortización</button>
+              <button class="btn btn-primary btn-full-width margin-top-sm" id="sim-calc-btn">${L("Recalcular Amortización", "Recalculate Amortization")}</button>
             </div>
           </div>
 
           <!-- Resultados y Desglose -->
           <div>
             <div class="calc-result-display calculator-result-card glass-premium">
-              <span class="calc-result-title">Pago Mensual Estimado</span>
+              <span class="calc-result-title">${L("Pago Mensual Estimado", "Estimated Monthly Payment")}</span>
               <p class="monthly-payment-amount" id="sim-payment-out">$0.00</p>
-              <p class="cat-info">Tasa Fija Cat Promedio 12.8% sin IVA</p>
+              <p class="cat-info">${L("Tasa Fija Cat Promedio 12.8% sin IVA", "Fixed Rate Avg. APR 12.8% excl. VAT")}</p>
               <button class="btn btn-success" id="sim-preapprove-btn">
-                <i data-lucide="check-circle" class="icon-inline icon-lg"></i> Pre-Aprobación Bancaria Digital
+                <i data-lucide="check-circle" class="icon-inline icon-lg"></i> ${L("Pre-Aprobación Bancaria Digital", "Digital Bank Pre-Approval")}
               </button>
             </div>
             
             <div class="margin-top-lg">
-              <h3 class="calculator-table-header">Desglose del Primer Año</h3>
+              <h3 class="calculator-table-header">${L("Tabla de Amortización Anual", "Annual Amortization Schedule")}</h3>
               <div class="comparator-table-wrapper">
                 <table class="comparator-table">
                   <thead>
                     <tr>
-                      <th>Año</th>
-                      <th>Pago Anual</th>
-                      <th>Abono a Capital</th>
-                      <th>Pago Intereses</th>
-                      <th>Saldo Restante</th>
+                      <th>${L("Año", "Year")}</th>
+                      <th>${L("Pago Anual", "Annual Payment")}</th>
+                      <th>${L("Abono a Capital", "Principal Paid")}</th>
+                      <th>${L("Pago Intereses", "Interest Paid")}</th>
+                      <th>${L("Saldo Restante", "Remaining Balance")}</th>
                     </tr>
                   </thead>
                   <tbody id="amortization-table-body">
@@ -109,12 +110,10 @@ export async function renderCalculatorView(state) {
     const outPayment = document.getElementById("sim-payment-out");
     const tableBody = document.getElementById("amortization-table-body");
 
+    let lastMonthlyPayment = 0;
+
     function formatMXN(num) {
-      return new Intl.NumberFormat('es-MX', {
-        style: 'currency',
-        currency: 'MXN',
-        maximumFractionDigits: 0
-      }).format(num);
+      return formatCurrency(num, "MXN");
     }
 
     function calculateMortgage() {
@@ -136,6 +135,7 @@ export async function renderCalculatorView(state) {
           monthlyPayment = principal / totalMonths;
         }
       }
+      lastMonthlyPayment = Math.round(monthlyPayment);
 
       // Render general details
       outDownCash.textContent = formatMXN(downpayment);
@@ -164,7 +164,7 @@ export async function renderCalculatorView(state) {
 
         tableHtml += `
           <tr>
-            <td class="font-bold">Año ${year}</td>
+            <td class="font-bold">${L("Año", "Year")} ${year}</td>
             <td>${formatMXN(yearlyPayment)}</td>
             <td class="color-success font-semibold">${formatMXN(yearlyPrincipalPaid)}</td>
             <td class="color-danger">${formatMXN(yearlyInterest)}</td>
@@ -176,7 +176,7 @@ export async function renderCalculatorView(state) {
       if (years > 10) {
         tableHtml += `
           <tr>
-            <td colspan="5" class="text-muted font-italic bg-primary">... Desglose simplificado de los años restantes hasta completar los ${years} años ...</td>
+            <td colspan="5" class="text-muted font-italic bg-primary">... ${L(`Desglose simplificado de los años restantes hasta completar los ${years} años`, `Simplified breakdown of remaining years up to ${years} years`)} ...</td>
           </tr>
         `;
       }
@@ -199,24 +199,28 @@ export async function renderCalculatorView(state) {
     // Preapproval button action
     document.getElementById("sim-preapprove-btn").addEventListener("click", () => {
       if (!appState.currentUser) {
-        alert("Por favor inicia sesión para procesar tu pre-aprobación hipotecaria.");
+        alert(L("Por favor inicia sesión para procesar tu pre-aprobación hipotecaria.", "Please sign in to process your mortgage pre-approval."));
         return;
       }
       const price = parseFloat(priceInput.value) || 0;
       const principal = price * (1 - (parseFloat(downPctInput.value)/100));
+      const userName = appState.currentUser?.name || L("Cliente", "Client");
 
       const credits = appState.currentUser.credits || [];
       credits.push({
         id: `cred-${Date.now()}`,
-        bank: "MudaT Pre-Aprobado (Simulación Completa)",
+        bank: L("MudaT Pre-Aprobado (Simulación Completa)", "MudaT Pre-Approved (Full Simulation)"),
         amount: principal,
-        status: "Pre-Aprobado en 5 min",
-        monthlyPayment: parseFloat(outPayment.textContent.replace(/[^0-9]/g, '')) || 0
+        status: L("Pre-Aprobado en 5 min", "Pre-Approved in 5 min"),
+        monthlyPayment: lastMonthlyPayment
       });
       appState.currentUser.credits = credits;
       updateUserProfile(appState.currentUser);
       
-      alert("¡Felicidades Sergio! Tu crédito hipotecario por " + formatMXN(principal) + " ha sido Pre-Aprobado de forma digital gracias a tu excelente historial crediticio y documentos en plataforma. Revisa tu certificado de pre-aprobación en tu perfil.");
+      alert(L(
+        `¡Felicidades ${userName}! Tu crédito hipotecario por ${formatMXN(principal)} ha sido Pre-Aprobado de forma digital gracias a tu excelente historial crediticio y documentos en plataforma. Revisa tu certificado de pre-aprobación en tu perfil.`,
+        `Congratulations ${userName}! Your mortgage loan for ${formatMXN(principal)} has been digitally Pre-Approved thanks to your excellent credit history and documents on the platform. Check your pre-approval certificate in your profile.`
+      ));
     });
   }
 

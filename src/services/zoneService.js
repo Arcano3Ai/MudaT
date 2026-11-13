@@ -5,11 +5,13 @@
  * Nunca fabrica establecimientos, calificaciones, reseñas ni fotografías.
  */
 
+import { L, getLang } from "./i18n.js";
+
 export const ZONE_CATEGORIES = [
   {
     id: "compras",
-    label: "Compras",
-    unitLabel: "establecimientos",
+    get label() { return L("Compras", "Shopping"); },
+    get unitLabel() { return L("establecimientos", "places"); },
     icon: "🛍️",
     color: "#f59e0b",
     googleTypes: ["shopping_mall", "supermarket", "convenience_store", "department_store"],
@@ -22,8 +24,8 @@ export const ZONE_CATEGORIES = [
   },
   {
     id: "educacion",
-    label: "Educación",
-    unitLabel: "instituciones",
+    get label() { return L("Educación", "Education"); },
+    get unitLabel() { return L("instituciones", "institutions"); },
     icon: "🎓",
     color: "#3b82f6",
     googleTypes: ["school", "primary_school", "secondary_school", "university"],
@@ -36,8 +38,8 @@ export const ZONE_CATEGORIES = [
   },
   {
     id: "salud",
-    label: "Salud",
-    unitLabel: "centros",
+    get label() { return L("Salud", "Healthcare"); },
+    get unitLabel() { return L("centros", "centers"); },
     icon: "🏥",
     color: "#ef4444",
     googleTypes: ["hospital", "clinic", "doctor", "pharmacy"],
@@ -50,8 +52,8 @@ export const ZONE_CATEGORIES = [
   },
   {
     id: "gastronomia",
-    label: "Gastronomía",
-    unitLabel: "establecimientos",
+    get label() { return L("Gastronomía", "Dining"); },
+    get unitLabel() { return L("establecimientos", "places"); },
     icon: "🍽️",
     color: "#ec4899",
     googleTypes: ["restaurant", "cafe", "bar", "bakery"],
@@ -64,8 +66,8 @@ export const ZONE_CATEGORIES = [
   },
   {
     id: "recreacion",
-    label: "Recreación",
-    unitLabel: "espacios",
+    get label() { return L("Recreación", "Recreation"); },
+    get unitLabel() { return L("espacios", "spaces"); },
     icon: "🌳",
     color: "#10b981",
     googleTypes: ["park", "movie_theater", "amusement_park", "tourist_attraction"],
@@ -78,8 +80,8 @@ export const ZONE_CATEGORIES = [
   },
   {
     id: "deporte",
-    label: "Deporte y bienestar",
-    unitLabel: "centros",
+    get label() { return L("Deporte y bienestar", "Sports & Wellness"); },
+    get unitLabel() { return L("centros", "centers"); },
     icon: "🏋️",
     color: "#8b5cf6",
     googleTypes: ["gym", "spa", "stadium"],
@@ -92,8 +94,8 @@ export const ZONE_CATEGORIES = [
   },
   {
     id: "movilidad",
-    label: "Movilidad",
-    unitLabel: "accesos",
+    get label() { return L("Movilidad", "Transit"); },
+    get unitLabel() { return L("accesos", "stops"); },
     icon: "🚌",
     color: "#06b6d4",
     googleTypes: ["transit_station", "bus_station", "subway_station", "train_station"],
@@ -106,8 +108,8 @@ export const ZONE_CATEGORIES = [
   },
   {
     id: "servicios",
-    label: "Servicios",
-    unitLabel: "puntos",
+    get label() { return L("Servicios", "Services"); },
+    get unitLabel() { return L("puntos", "locations"); },
     icon: "🏦",
     color: "#64748b",
     googleTypes: ["bank", "atm", "post_office", "police"],
@@ -160,7 +162,7 @@ export function haversineDistance(lat1, lng1, lat2, lng2) {
 }
 
 export function formatDistance(meters) {
-  if (!Number.isFinite(meters)) return "N/D";
+  if (!Number.isFinite(meters)) return L("N/D", "N/A");
   if (meters < 1000) return `${Math.round(meters)} m`;
   return `${(meters / 1000).toFixed(1)} km`;
 }
@@ -221,9 +223,9 @@ export function loadGoogleMapsScript(apiKey) {
     script.id = "mudat-gmaps-sdk";
     script.async = true;
     script.defer = true;
-    script.src = `https://maps.googleapis.com/maps/api/js?key=${encodeURIComponent(apiKey)}&libraries=places&language=es`;
+    script.src = `https://maps.googleapis.com/maps/api/js?key=${encodeURIComponent(apiKey)}&libraries=places&language=${getLang()}`;
     script.onload = () => resolve(window.google.maps);
-    script.onerror = () => reject(new Error("No se pudo cargar Google Maps Platform"));
+    script.onerror = () => reject(new Error(L("No se pudo cargar Google Maps Platform", "Could not load Google Maps Platform")));
     document.head.appendChild(script);
   });
 }
@@ -254,7 +256,7 @@ export function loadLeafletAssets() {
     script.async = true;
     script.src = "https://unpkg.com/leaflet@1.9.4/dist/leaflet.js";
     script.onload = () => resolve(window.L);
-    script.onerror = () => reject(new Error("No se pudo cargar el motor cartográfico"));
+    script.onerror = () => reject(new Error(L("No se pudo cargar el motor cartográfico", "Could not load map engine")));
     document.head.appendChild(script);
   });
 }

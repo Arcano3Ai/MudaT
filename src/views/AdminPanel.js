@@ -1,34 +1,39 @@
+import { L, tCategory, formatCurrency, getLang } from "../services/i18n.js";
+
 export async function renderAdminPanel(state) {
   const html = `
     <div class="section-container fade-in">
       
       <div class="admin-header">
         <div>
-          <h2>Consola de Administración SaaS</h2>
-          <p>Configuraciones globales, control multi-agente, facturación de suscripciones y moderación de anuncios de MudaT México.</p>
+          <h2>${L("Consola de Administración SaaS", "SaaS Admin Console")}</h2>
+          <p>${L(
+            "Configuraciones globales, control multi-agente, facturación de suscripciones y moderación de anuncios de MudaT México.",
+            "Global settings, multi-agent control, subscription billing, and listing moderation for MudaT Mexico."
+          )}</p>
         </div>
         <div class="admin-badge-super">
-          Modo: Super Admin
+          ${L("Modo: Super Admin", "Mode: Super Admin")}
         </div>
       </div>
 
       <!-- Métricas Globales de Operación -->
       <div class="metrics-row admin-metrics-margin">
         <div class="metric-card">
-          <span class="font-sm text-secondary font-semibold">Total Inmobiliarias SaaS</span>
+          <span class="font-sm text-secondary font-semibold">${L("Total Inmobiliarias SaaS", "Total SaaS Agencies")}</span>
           <span class="metric-value">42</span>
         </div>
         <div class="metric-card">
-          <span class="font-sm text-secondary font-semibold">Asesores Suscritos</span>
+          <span class="font-sm text-secondary font-semibold">${L("Asesores Suscritos", "Subscribed Advisors")}</span>
           <span class="metric-value">185</span>
         </div>
         <div class="metric-card">
-          <span class="font-sm text-secondary font-semibold">Inmuebles en Catálogo</span>
+          <span class="font-sm text-secondary font-semibold">${L("Inmuebles en Catálogo", "Properties in Catalog")}</span>
           <span class="metric-value" id="admin-listings-count">${state.properties.length}</span>
         </div>
         <div class="metric-card">
-          <span class="font-sm text-secondary font-semibold">Suscripciones Facturadas</span>
-          <span class="metric-value color-success">$128,400 MXN</span>
+          <span class="font-sm text-secondary font-semibold">${L("Suscripciones Facturadas", "Billed Subscriptions")}</span>
+          <span class="metric-value color-success">${formatCurrency(128400, "MXN")} MXN</span>
         </div>
       </div>
 
@@ -39,18 +44,18 @@ export async function renderAdminPanel(state) {
         <div class="admin-panel-card">
           <h3>
             <i data-lucide="shield-alert" class="color-warning"></i>
-            Moderación de Anuncios Pendientes
+            ${L("Moderación de Anuncios Pendientes", "Pending Listing Moderation")}
           </h3>
           
           <div class="comparator-table-wrapper">
             <table class="admin-table">
               <thead>
                 <tr>
-                  <th>Inmueble</th>
-                  <th>Ubicación</th>
-                  <th>Precio</th>
-                  <th>Publicador</th>
-                  <th>Acción</th>
+                  <th>${L("Inmueble", "Property")}</th>
+                  <th>${L("Ubicación", "Location")}</th>
+                  <th>${L("Precio", "Price")}</th>
+                  <th>${L("Publicador", "Publisher")}</th>
+                  <th>${L("Acción", "Action")}</th>
                 </tr>
               </thead>
               <tbody id="admin-moderation-tbody">
@@ -67,20 +72,20 @@ export async function renderAdminPanel(state) {
           <div class="admin-panel-card-half glass-premium">
             <h3>
               <i data-lucide="badge-percent" class="color-brand"></i>
-              Monetización y Planes Activos
+              ${L("Monetización y Planes Activos", "Monetization & Active Plans")}
             </h3>
             <ul class="admin-list-plans">
               <div class="admin-list-plans-item">
-                <span>Plan Asesor Mensual (Premium)</span>
-                <strong>$899 MXN / mes</strong>
+                <span>${L("Plan Asesor Mensual (Premium)", "Monthly Advisor Plan (Premium)")}</span>
+                <strong>${formatCurrency(899, "MXN")} MXN / ${L("mes", "mo")}</strong>
               </div>
               <div class="admin-list-plans-item">
-                <span>Plan Inmobiliaria SaaS (Multiagente)</span>
-                <strong>$4,500 MXN / mes</strong>
+                <span>${L("Plan Inmobiliaria SaaS (Multiagente)", "SaaS Agency Plan (Multi-agent)")}</span>
+                <strong>${formatCurrency(4500, "MXN")} MXN / ${L("mes", "mo")}</strong>
               </div>
               <div class="admin-list-plans-item">
-                <span>Destacar Propiedad (Destacada)</span>
-                <strong>$499 MXN / 15 días</strong>
+                <span>${L("Destacar Propiedad (Destacada)", "Feature Property (Highlighted)")}</span>
+                <strong>${formatCurrency(499, "MXN")} MXN / ${L("15 días", "15 days")}</strong>
               </div>
             </ul>
           </div>
@@ -89,14 +94,14 @@ export async function renderAdminPanel(state) {
           <div class="admin-panel-card-half glass-premium">
             <h3>
               <i data-lucide="terminal" class="text-secondary"></i>
-              SaaS System Logs (En Vivo)
+              ${L("SaaS System Logs (En Vivo)", "SaaS System Logs (Live)")}
             </h3>
             <pre class="admin-system-logs">
-[2026-06-12 01:04:30] LOG: Inicialización de sesión multi-agente.
-[2026-06-12 01:04:45] LOG: Carga de base de datos mockProperties.js exitosa.
-[2026-06-12 01:05:00] LOG: Escaneo antivirus en carga de INE Sergio Developer completada: OK.
-[2026-06-12 01:05:10] LOG: Generación de copy por IA para "Penthouse Polanco": Exitoso.
-[2026-06-12 01:05:15] LOG: Transacción de plan comercial procesada con Stripe: ID ch_3M2h...
+[2026-06-12 01:04:30] LOG: ${L("Inicialización de sesión multi-agente.", "Multi-agent session initialized.")}
+[2026-06-12 01:04:45] LOG: ${L("Carga de base de datos mockProperties.js exitosa.", "Database mockProperties.js loaded successfully.")}
+[2026-06-12 01:05:00] LOG: ${L("Escaneo antivirus en carga de INE Sergio Developer completada: OK.", "Antivirus scan on Sergio Developer ID upload completed: OK.")}
+[2026-06-12 01:05:10] LOG: ${L('Generación de copy por IA para "Penthouse Polanco": Exitoso.', 'AI copy generation for "Penthouse Polanco": Success.')}
+[2026-06-12 01:05:15] LOG: ${L("Transacción de plan comercial procesada con Stripe: ID ch_3M2h...", "Commercial plan transaction processed via Stripe: ID ch_3M2h...")}
             </pre>
           </div>
 
@@ -110,30 +115,32 @@ export async function renderAdminPanel(state) {
   function init(appState) {
     const tbody = document.getElementById("admin-moderation-tbody");
     const countEl = document.getElementById("admin-listings-count");
+    const approvedIds = new Set();
 
     function renderModerationTable() {
-      if (appState.properties.length === 0) {
-        tbody.innerHTML = `<tr><td colspan="5" class="text-center text-muted">No hay propiedades por moderar.</td></tr>`;
+      const pendingProps = appState.properties.filter(p => !approvedIds.has(p.id));
+      if (countEl) {
+        countEl.textContent = pendingProps.length;
+      }
+
+      if (pendingProps.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="5" class="text-center text-muted">${L("No hay propiedades por moderar.", "No properties pending moderation.")}</td></tr>`;
         return;
       }
 
-      tbody.innerHTML = appState.properties.map(prop => {
-        const formattedPrice = new Intl.NumberFormat('es-MX', {
-          style: 'currency',
-          currency: prop.currency,
-          maximumFractionDigits: 0
-        }).format(prop.price);
+      tbody.innerHTML = pendingProps.map(prop => {
+        const formattedPrice = formatCurrency(prop.price, prop.currency || "MXN");
 
         return `
           <tr id="row-${prop.id}">
             <td class="title">${prop.title}</td>
-            <td class="meta">${prop.location.city}</td>
+            <td class="meta">${prop.location?.city || ""}</td>
             <td class="price">${formattedPrice}</td>
-            <td class="meta">${prop.advisor.name}</td>
+            <td class="meta">${prop.advisor?.name || "MudaT"}</td>
             <td>
               <div class="actions">
-                <button class="btn btn-success approve-btn" data-id="${prop.id}">Aprobar</button>
-                <button class="btn btn-secondary reject-btn color-danger" data-id="${prop.id}">Rechazar</button>
+                <button class="btn btn-success approve-btn" data-id="${prop.id}">${L("Aprobar", "Approve")}</button>
+                <button class="btn btn-secondary reject-btn color-danger" data-id="${prop.id}">${L("Rechazar", "Reject")}</button>
               </div>
             </td>
           </tr>
@@ -144,17 +151,23 @@ export async function renderAdminPanel(state) {
       document.querySelectorAll(".approve-btn").forEach(btn => {
         btn.addEventListener("click", () => {
           const id = btn.getAttribute("data-id");
-          alert("El inmueble ha sido validado, certificado con sello verde de MudaT y aprobado para distribución nacional.");
-          document.getElementById(`row-${id}`).remove();
+          approvedIds.add(id);
+          alert(L(
+            "El inmueble ha sido validado, certificado con sello verde de MudaT y aprobado para distribución nacional.",
+            "The property has been validated, certified with MudaT's green seal, and approved for national distribution."
+          ));
+          renderModerationTable();
         });
       });
 
       document.querySelectorAll(".reject-btn").forEach(btn => {
         btn.addEventListener("click", () => {
           const id = btn.getAttribute("data-id");
-          if (confirm("¿Estás seguro de que deseas dar de baja y rechazar este anuncio?")) {
+          if (confirm(L(
+            "¿Estás seguro de que deseas dar de baja y rechazar este anuncio?",
+            "Are you sure you want to remove and reject this listing?"
+          ))) {
             appState.properties = appState.properties.filter(p => p.id !== id);
-            countEl.textContent = appState.properties.length;
             renderModerationTable();
           }
         });

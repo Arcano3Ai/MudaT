@@ -4,6 +4,8 @@
  * gestos táctiles/puntero en iOS/Chrome) con botón flotante para pausar o reanudar.
  */
 
+import { L } from "../services/i18n.js";
+
 export function initBackgroundAudio() {
   if (typeof window === "undefined" || document.getElementById("mudat-bg-audio")) {
     return;
@@ -31,9 +33,11 @@ export function initBackgroundAudio() {
   function updateFabUI() {
     const isPlaying = !audio.paused && !audio.ended;
     fab.classList.toggle("playing", isPlaying);
+    fab.setAttribute("aria-label", L("Controlar música de fondo", "Toggle background music"));
+    fab.title = L("Música ¡Múdate!", "¡Múdate! Music");
     fab.innerHTML = isPlaying
       ? `<span class="mudat-audio-eq" aria-hidden="true"><span></span><span></span><span></span></span><span class="mudat-audio-label">¡Múdate!</span>`
-      : `<span class="mudat-audio-icon" aria-hidden="true">🎵</span><span class="mudat-audio-label">Música</span>`;
+      : `<span class="mudat-audio-icon" aria-hidden="true">🎵</span><span class="mudat-audio-label">${L("Música", "Music")}</span>`;
   }
 
   function detachUnlockListeners() {
@@ -93,6 +97,8 @@ export function initBackgroundAudio() {
 
   audio.addEventListener("play", updateFabUI);
   audio.addEventListener("pause", updateFabUI);
+  window.addEventListener("mudat_lang_change", updateFabUI);
 
   updateFabUI();
 }
+
