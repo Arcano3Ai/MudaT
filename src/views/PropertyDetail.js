@@ -1,5 +1,6 @@
 import { updateUserProfile } from "../services/auth.js";
 import { renderPropertyCard } from "../components/PropertyCard.js";
+import { renderConoceLaZonaShell, initConoceLaZona } from "../components/ConoceLaZona.js";
 
 export async function renderPropertyDetail(state) {
   const propId = state.activePropertyId;
@@ -222,6 +223,8 @@ export async function renderPropertyDetail(state) {
         </div>
 
       </div>
+
+      ${renderConoceLaZonaShell()}
 
       <!-- Propiedades Similares -->
       <section class="prop-similar-footer-section">
@@ -483,6 +486,9 @@ export async function renderPropertyDetail(state) {
       updateUserProfile(appState.currentUser);
       alert("¡Solicitud enviada! Instando pre-aprobación digital con bancos asociados. Revisa el estado de tu trámite en tu portal.");
     });
+
+    // Inicializar módulo interactivo CONOCE LA ZONA
+    initConoceLaZona(prop);
   }
 
   return { html, init };
