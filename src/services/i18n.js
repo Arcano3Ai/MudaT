@@ -205,10 +205,10 @@ export function applyStaticTranslations(lang = getLang()) {
   }
 
   // Modal Login
-  setText(".login-title", en ? "MudaT Exclusive Access" : "Acceso Exclusivo MudaT");
-  setText(".login-subtitle", en
-    ? "Sign in to your PropTech account or jump right in by selecting a demo profile."
-    : "Inicia sesión en tu cuenta PropTech o ingresa rápido seleccionando un perfil de demostración.");
+  setText(".login-modal-title", en ? "MudaT Exclusive Access" : "Acceso Exclusivo MudaT");
+  setText(".login-modal-subtitle", en
+    ? "Sign in with your account or with the credentials provided by your advisor."
+    : "Inicia sesión con tu cuenta o con las credenciales proporcionadas por tu asesor.");
   const loginLabels = document.querySelectorAll("#login-form label");
   if (loginLabels.length >= 2) {
     loginLabels[0].textContent = en ? "Username or Email" : "Usuario o Correo Electrónico";

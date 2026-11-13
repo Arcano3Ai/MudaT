@@ -83,9 +83,59 @@ export function authenticateCredentials(usernameOrEmail, password) {
     return { ok: true, user: advisorUser };
   }
 
+  // Validar contra perfiles de clientes creados por el asesor
+  const clientProfiles = getAdvisorCreatedProfiles();
+  const matchedProfile = clientProfiles.find(
+    (p) =>
+      p.email?.toLowerCase() === identifier ||
+      p.name?.toLowerCase() === identifier
+  );
+  if (matchedProfile) {
+    if (matchedProfile.password && matchedProfile.password !== password) {
+      return { ok: false, error: "Contraseña incorrecta para este perfil." };
+    }
+    const safeUser = { ...matchedProfile };
+    delete safeUser.password;
+    localStorage.setItem("mudat_current_user", JSON.stringify(safeUser));
+    window.dispatchEvent(new Event("mudat_auth_change"));
+    return { ok: true, user: safeUser };
+  }
+
   // Fallback para otros usuarios / clientes
   const user = login(usernameOrEmail, "client");
   return { ok: true, user };
+}
+
+export function getAdvisorCreatedProfiles() {
+  try {
+    return JSON.parse(localStorage.getItem("mudat_client_profiles") || "[]");
+  } catch {
+    return [];
+  }
+}
+
+export function createClientProfile({ name, email, phone, password, createdBy = "Yesenia Cuevas" }) {
+  const list = getAdvisorCreatedProfiles();
+  const profile = {
+    id: `client-${Date.now()}`,
+    name: name.trim(),
+    email: email.trim(),
+    phone: (phone || "").trim(),
+    password: password || "Mudat2026",
+    role: "client",
+    createdBy,
+    createdAt: new Date().toISOString().slice(0, 10),
+    avatar: "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=150&q=80",
+    favorites: [],
+    savedSearches: [],
+    alerts: [],
+    documents: [],
+    credits: [],
+    visits: []
+  };
+  list.unshift(profile);
+  localStorage.setItem("mudat_client_profiles", JSON.stringify(list));
+  return profile;
 }
 
 export function login(email, role = "client") {

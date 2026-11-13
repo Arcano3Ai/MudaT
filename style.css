@@ -4243,3 +4243,42 @@ footer {
     grid-template-columns: 1fr;
   }
 }
+
+/* ==========================================================================
+   Modal Login — Inputs y Botones Limpios
+   ========================================================================== */
+#login-form .filter-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+  text-align: left;
+}
+
+#login-form .filter-group label {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+#login-form .filter-input {
+  width: 100%;
+  padding: 0.78rem 1rem;
+  border-radius: 10px;
+  border: 1px solid var(--border-color);
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--text-primary);
+  font-size: 0.95rem;
+  outline: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+#login-form .filter-input:focus {
+  border-color: var(--color-brand, #c5a059);
+  box-shadow: 0 0 0 3px rgba(197, 160, 89, 0.18);
+}
+
+.login-modal-card {
+  max-width: 440px;
+  width: 92%;
+  padding: 2.25rem 2rem;
+}

@@ -1,4 +1,4 @@
-import { updateUserProfile } from "../services/auth.js";
+import { updateUserProfile, createClientProfile, getAdvisorCreatedProfiles } from "../services/auth.js";
 import { L, tCategory, formatCurrency, getLang } from "../services/i18n.js";
 
 const DEFAULT_CRM_LEADS = [
@@ -644,7 +644,63 @@ export async function renderAdvisorDashboard(state) {
           <p id="adv-prof-saved" class="display-none color-success font-sm font-bold" style="margin-top:0.85rem;">${L("✓ Perfil comercial actualizado correctamente.", "✓ Commercial profile updated successfully.")}</p>
           <button type="submit" class="btn btn-primary" style="margin-top:1.25rem;">${L("Guardar Cambios", "Save Changes")}</button>
         </form>
+
+        <div style="margin-top:2.5rem; padding-top:2rem; border-top:1px solid var(--border-color); max-width:600px;">
+          <h3 class="client-dashboard-tab-title" style="font-size:1.2rem;">${L("Crear Perfil de Acceso para Cliente", "Create Client Access Profile")}</h3>
+          <p class="font-sm text-secondary margin-bottom-md">${L("Genera las credenciales de acceso para que tus clientes ingresen a su portal MudaT.", "Generate access credentials so your clients can sign in to their MudaT portal.")}</p>
+
+          <form id="advisor-create-client-form" class="pub-form">
+            <div class="filter-group">
+              <label>${L("Nombre del Cliente", "Client Name")}</label>
+              <input type="text" class="filter-input" id="adv-new-client-name" placeholder="${L('Ej. Carlos Mendoza', 'e.g. Carlos Mendoza')}" required>
+            </div>
+            <div class="filter-group" style="margin-top:0.85rem;">
+              <label>${L("Correo Electrónico", "Email Address")}</label>
+              <input type="email" class="filter-input" id="adv-new-client-email" placeholder="cliente@correo.com" required>
+            </div>
+            <div class="filter-group" style="margin-top:0.85rem;">
+              <label>${L("Teléfono / WhatsApp", "Phone / WhatsApp")}</label>
+              <input type="tel" class="filter-input" id="adv-new-client-phone" placeholder="+52 55 0000 0000">
+            </div>
+            <div class="filter-group" style="margin-top:0.85rem;">
+              <label>${L("Contraseña Temporal", "Temporary Password")}</label>
+              <input type="text" class="filter-input" id="adv-new-client-pass" value="Mudat2026" required>
+            </div>
+            <p id="adv-client-created-msg" class="display-none color-success font-sm font-bold" style="margin-top:0.85rem;"></p>
+            <button type="submit" class="btn btn-success" style="margin-top:1rem;">${L("Crear Perfil de Cliente", "Create Client Profile")}</button>
+          </form>
+
+          <div id="adv-created-clients-list" style="margin-top:1.25rem; display:flex; flex-direction:column; gap:0.5rem;">
+            ${getAdvisorCreatedProfiles().map(cp => `
+              <div class="advisor-agenda-card">
+                <div>
+                  <p class="font-bold font-sm">${cp.name}</p>
+                  <p class="advisor-agenda-meta">${cp.email} ${cp.phone ? '• ' + cp.phone : ''}</p>
+                </div>
+                <span class="advisor-stage-pill">${L("Activo", "Active")}</span>
+              </div>
+            `).join("")}
+          </div>
+        </div>
       `;
+
+      document.getElementById("advisor-create-client-form")?.addEventListener("submit", (e) => {
+        e.preventDefault();
+        const name = document.getElementById("adv-new-client-name").value;
+        const email = document.getElementById("adv-new-client-email").value;
+        const phone = document.getElementById("adv-new-client-phone").value;
+        const password = document.getElementById("adv-new-client-pass").value;
+        const created = createClientProfile({ name, email, phone, password, createdBy: u.name });
+        renderProfile();
+        const msgEl = document.getElementById("adv-client-created-msg");
+        if (msgEl) {
+          msgEl.textContent = L(
+            `✓ Perfil creado para ${created.name} (${created.email}).`,
+            `✓ Profile created for ${created.name} (${created.email}).`
+          );
+          msgEl.classList.remove("display-none");
+        }
+      });
 
       document.getElementById("advisor-profile-form")?.addEventListener("submit", (e) => {
         e.preventDefault();
