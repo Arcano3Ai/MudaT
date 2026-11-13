@@ -3660,3 +3660,374 @@ footer {
     align-items: flex-start;
   }
 }
+
+/* ==========================================================================
+   Ficha de Propiedad (PropertyDetail) — Galería, Calculadora, Sidebar & Grid
+   ========================================================================== */
+.prop-detail-meta-box {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  margin-bottom: 0.5rem;
+}
+
+.prop-detail-age-text {
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.prop-detail-header-actions {
+  display: flex;
+  gap: 0.6rem;
+  justify-content: flex-end;
+  margin-top: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.detail-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.75fr) minmax(320px, 1fr);
+  gap: 2rem;
+  align-items: start;
+}
+
+.detail-main {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1.75rem;
+}
+
+.detail-sidebar {
+  min-width: 0;
+  position: sticky;
+  top: 90px;
+}
+
+.gallery-section {
+  background: var(--bg-secondary, #12151f);
+  border: 1px solid var(--border-color);
+  border-radius: 18px;
+  padding: 1rem;
+}
+
+.multimedia-tabs {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  margin-bottom: 0.9rem;
+}
+
+.multimedia-tab-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.45rem 0.9rem;
+  border-radius: 999px;
+  border: 1px solid var(--border-color);
+  background: rgba(255, 255, 255, 0.03);
+  color: var(--text-secondary);
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.multimedia-tab-btn.active {
+  background: var(--color-brand);
+  border-color: var(--color-brand);
+  color: #111827;
+}
+
+.multimedia-tab-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.gallery-main-wrapper {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  max-height: 520px;
+  border-radius: 14px;
+  overflow: hidden;
+  background: #0b0e14;
+}
+
+.gallery-main-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.gallery-nav-buttons {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 0.75rem;
+  pointer-events: none;
+}
+
+.gallery-nav-btn {
+  pointer-events: auto;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: rgba(11, 14, 20, 0.72);
+  color: #ffffff;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  backdrop-filter: blur(6px);
+  transition: all 0.2s ease;
+}
+
+.gallery-nav-btn:hover {
+  background: var(--color-brand);
+  color: #111827;
+}
+
+.gallery-thumbnails {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(96px, 1fr));
+  gap: 0.65rem;
+  margin-top: 0.75rem;
+}
+
+.gallery-thumb {
+  height: 68px;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 2px solid transparent;
+  opacity: 0.6;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.gallery-thumb.active,
+.gallery-thumb:hover {
+  opacity: 1;
+  border-color: var(--color-brand);
+}
+
+.gallery-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.calculator-card {
+  padding: 1.75rem;
+  border-radius: 18px;
+  border: 1px solid var(--border-color);
+  background: var(--bg-secondary, #12151f);
+}
+
+.calculator-card-title {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  font-size: 1.15rem;
+  margin: 0 0 0.35rem;
+}
+
+.calculator-card-subtitle {
+  font-size: 0.86rem;
+  color: var(--text-secondary);
+  margin: 0 0 1.25rem;
+}
+
+.calc-inputs-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+}
+
+.calc-result-display {
+  padding: 1.25rem;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--border-color);
+  text-align: center;
+}
+
+.calc-result-title {
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-secondary);
+  margin: 0;
+}
+
+.monthly-payment-amount {
+  font-family: var(--font-title);
+  font-size: 2rem;
+  font-weight: 800;
+  color: var(--color-brand);
+  margin: 0.25rem 0;
+}
+
+.calc-disclaimer {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin: 0 0 1rem;
+}
+
+.contact-widget-card {
+  padding: 1.5rem;
+  border-radius: 18px;
+  border: 1px solid rgba(197, 160, 89, 0.25);
+  background: var(--bg-secondary, #12151f);
+}
+
+.advisor-tagline {
+  display: inline-block;
+  margin-bottom: 0.85rem;
+}
+
+.advisor-info-row {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  margin-bottom: 1.25rem;
+}
+
+.advisor-photo {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  object-fit: cover;
+  object-position: top center;
+  border: 2px solid var(--color-brand);
+  flex-shrink: 0;
+}
+
+.advisor-details {
+  min-width: 0;
+}
+
+.advisor-details h4 {
+  margin: 0;
+  font-size: 1.05rem;
+}
+
+.advisor-email {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  margin: 0.15rem 0;
+  word-break: break-word;
+}
+
+.advisor-rating {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--color-brand);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.contact-actions-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+  margin-bottom: 1.25rem;
+}
+
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  padding-top: 1.15rem;
+  border-top: 1px solid var(--border-color);
+}
+
+.schedule-form-title {
+  font-size: 0.95rem;
+  font-weight: 700;
+  margin: 0;
+}
+
+.prop-similar-footer-section {
+  margin-top: 3rem;
+  padding-top: 2rem;
+  border-top: 1px solid var(--border-color);
+}
+
+.similar-section-title {
+  font-size: 1.35rem;
+  margin: 0 0 1.25rem;
+}
+
+.prop-similar-footer-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+@media (max-width: 968px) {
+  .detail-grid {
+    grid-template-columns: 1fr;
+  }
+  .detail-sidebar {
+    position: static;
+  }
+  .prop-similar-footer-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 640px) {
+  .prop-detail-price-box {
+    text-align: left;
+    width: 100%;
+  }
+  .prop-detail-header-actions {
+    justify-content: flex-start;
+  }
+  .calc-inputs-grid {
+    grid-template-columns: 1fr;
+  }
+  .prop-similar-footer-grid {
+    grid-template-columns: 1fr;
+  }
+  .gallery-main-wrapper {
+    aspect-ratio: 4 / 3;
+  }
+}
+
+.calculator-card .filter-group,
+.contact-form .filter-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.calculator-card .filter-group label,
+.contact-form .filter-group label {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.calculator-card .filter-input,
+.calculator-card .filter-select,
+.contact-form .filter-input,
+.contact-form .filter-select {
+  width: 100%;
+  padding: 0.65rem 0.85rem;
+  border-radius: 10px;
+  border: 1px solid var(--border-color);
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--text-primary);
+  font-size: 0.9rem;
+}
