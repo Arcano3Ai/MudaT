@@ -1,4 +1,4 @@
-import { getCurrentUser, switchUserRole, login, logout } from "../services/auth.js";
+import { getCurrentUser, switchUserRole, authenticateCredentials, logout } from "../services/auth.js";
 
 /**
  * Inicializa los eventos y comportamientos del Header:
@@ -77,6 +77,11 @@ export function initHeader(state, onAuthChangeCallback) {
 
   // Función para abrir el modal
   const openModal = () => {
+    const errorEl = document.getElementById("login-error-msg");
+    if (errorEl) {
+      errorEl.textContent = "";
+      errorEl.classList.add("display-none");
+    }
     modal?.classList.remove("display-none");
     modal?.classList.add("fade-in");
   };
@@ -106,14 +111,27 @@ export function initHeader(state, onAuthChangeCallback) {
     }
   });
 
-  // Formulario Submit (Simulado con Credenciales)
+  // Formulario Submit (Validación de Credenciales)
   loginForm?.addEventListener("submit", (e) => {
     e.preventDefault();
-    const email = document.getElementById("login-email").value;
-    const user = login(email, "client"); // Login como cliente por defecto con sus credenciales
-    state.currentUser = user;
+    const identifier = document.getElementById("login-email").value;
+    const password = document.getElementById("login-password").value;
+    const errorEl = document.getElementById("login-error-msg");
+
+    const result = authenticateCredentials(identifier, password);
+    if (!result.ok) {
+      if (errorEl) {
+        errorEl.textContent = result.error;
+        errorEl.classList.remove("display-none");
+      } else {
+        alert(result.error);
+      }
+      return;
+    }
+
+    state.currentUser = result.user;
     closeModal();
-    alert(`¡Bienvenido de vuelta, ${user.name}! Sesión premium iniciada de forma segura.`);
+    alert(`¡Bienvenida de vuelta, ${result.user.name}! Sesión iniciada de forma segura.`);
   });
 
   // Clics en Perfiles Demo de Acceso Rápido

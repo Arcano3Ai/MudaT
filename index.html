@@ -65,7 +65,7 @@
       }
     }
   </script>
-  <link rel="stylesheet" href="./style.css?v=20261112">
+  <link rel="stylesheet" href="./style.css?v=20261113">
   <!-- Lucide Icons CDN -->
   <script src="https://unpkg.com/lucide@latest"></script>
 </head>
@@ -215,14 +215,15 @@
       
       <form id="login-form" class="pub-form" style="border:none; padding:0; background:transparent; margin-bottom:1.5rem;">
         <div class="filter-group">
-          <label>Correo Electrónico</label>
-          <input type="email" class="filter-input" placeholder="ejemplo@mudat.mx" id="login-email" required>
+          <label>Usuario o Correo Electrónico</label>
+          <input type="text" class="filter-input" placeholder="Yesenia Cuevas" id="login-email" required>
         </div>
         <div class="filter-group" style="margin-top:1rem;">
           <label>Contraseña</label>
           <input type="password" class="filter-input" placeholder="••••••••" id="login-password" required>
         </div>
-        <button type="submit" class="btn btn-primary btn-full-width" style="margin-top:1.5rem;">Ingresar Seguro</button>
+        <p id="login-error-msg" class="display-none" style="color:#ef4444; font-size:0.8rem; font-weight:600; margin-top:0.75rem;"></p>
+        <button type="submit" class="btn btn-primary btn-full-width" style="margin-top:1.25rem;">Ingresar Seguro</button>
       </form>
 
       <div class="login-divider"><span>O INGRESAR CON PERFIL DEMO</span></div>
@@ -245,6 +246,6 @@
   </div>
 
   <!-- App Entrypoint Script -->
-  <script type="module" src="./app.js?v=20261112"></script>
+  <script type="module" src="./app.js?v=20261113"></script>
 </body>
 </html>

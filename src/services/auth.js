@@ -45,6 +45,13 @@ const DEFAULT_USERS = {
 export function initializeAuth() {
   if (!localStorage.getItem("mudat_users")) {
     localStorage.setItem("mudat_users", JSON.stringify(DEFAULT_USERS));
+  } else {
+    // Sync updated default advisor (Yesenia Cuevas) if stale data exists
+    const storedUsers = JSON.parse(localStorage.getItem("mudat_users"));
+    if (storedUsers?.advisor?.name !== DEFAULT_USERS.advisor.name) {
+      storedUsers.advisor = DEFAULT_USERS.advisor;
+      localStorage.setItem("mudat_users", JSON.stringify(storedUsers));
+    }
   }
   // Setup initial active session as client by default to start on the homepage
   if (!localStorage.getItem("mudat_current_user")) {
@@ -53,8 +60,32 @@ export function initializeAuth() {
 }
 
 export function getCurrentUser() {
-  initializeAuth();
   return JSON.parse(localStorage.getItem("mudat_current_user"));
+}
+
+export function authenticateCredentials(usernameOrEmail, password) {
+  initializeAuth();
+  const users = JSON.parse(localStorage.getItem("mudat_users"));
+  const identifier = (usernameOrEmail || "").trim().toLowerCase();
+
+  // Validación específica para Asesora Principal: Yesenia Cuevas
+  if (
+    identifier === "yesenia cuevas" ||
+    identifier === "yesenia.cuevas@mudat.mx" ||
+    identifier === "yesenia"
+  ) {
+    if (password !== "Yeseniatupuedes") {
+      return { ok: false, error: "Contraseña incorrecta para Yesenia Cuevas." };
+    }
+    const advisorUser = users.advisor || DEFAULT_USERS.advisor;
+    localStorage.setItem("mudat_current_user", JSON.stringify(advisorUser));
+    window.dispatchEvent(new Event("mudat_auth_change"));
+    return { ok: true, user: advisorUser };
+  }
+
+  // Fallback para otros usuarios / clientes
+  const user = login(usernameOrEmail, "client");
+  return { ok: true, user };
 }
 
 export function login(email, role = "client") {
