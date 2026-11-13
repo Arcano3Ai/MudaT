@@ -1,0 +1,411 @@
+<h2>Propuesta de Rediseño: Ecosistema Inmobiliario MudaT</h2>
+<p class="subtitle">Mockup interactivo del rediseño premium inspirado en portales líderes como Lamudi y Propiedades24, potenciado por IA con nuestro enfoque Híbrido de Lujo.</p>
+
+<style>
+  .portal-mockup {
+    background: #0a0b0d;
+    color: #f3f4f6;
+    border-radius: 14px;
+    border: 1px solid rgba(197, 160, 89, 0.2);
+    padding: 2rem;
+    margin-top: 1.5rem;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+  }
+
+  /* Header Mockup */
+  .mock-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 1.2rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    margin-bottom: 2rem;
+  }
+  .mock-logo {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
+  .mock-logo-icon {
+    background: linear-gradient(135deg, #c5a059 0%, #b28e46 100%);
+    color: #0a0b0d;
+    font-weight: 800;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    font-size: 1.1rem;
+  }
+  .mock-logo-text {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: #f3f4f6;
+    letter-spacing: -0.5px;
+  }
+  .mock-nav {
+    display: flex;
+    gap: 1.5rem;
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: #9ca3af;
+  }
+  .mock-nav span.active {
+    color: #c5a059;
+    border-bottom: 2px solid #c5a059;
+    padding-bottom: 4px;
+  }
+
+  /* Hero / Search Section */
+  .mock-hero {
+    text-align: center;
+    padding: 3rem 1rem;
+    position: relative;
+    background: radial-gradient(circle at 50% 30%, rgba(197, 160, 89, 0.08) 0%, transparent 60%);
+    border-radius: 12px;
+    margin-bottom: 2rem;
+  }
+  .mock-title {
+    font-size: 2.5rem;
+    font-weight: 800;
+    line-height: 1.2;
+    margin-bottom: 0.8rem;
+    background: linear-gradient(180deg, #ffffff 0%, #a1a1aa 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .mock-subtitle {
+    color: #9ca3af;
+    font-size: 0.95rem;
+    max-width: 600px;
+    margin: 0 auto 2rem auto;
+  }
+
+  /* Lamudi-style Search Widget */
+  .mock-search-widget {
+    background: rgba(18, 19, 22, 0.75);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 16px;
+    padding: 1.5rem;
+    max-width: 900px;
+    margin: 0 auto;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+    text-align: left;
+  }
+  .mock-search-tabs {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 1.2rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    padding-bottom: 0.8rem;
+  }
+  .mock-tab {
+    padding: 0.4rem 1rem;
+    border-radius: 6px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #9ca3af;
+    cursor: pointer;
+  }
+  .mock-tab.active {
+    background: rgba(197, 160, 89, 0.15);
+    color: #c5a059;
+    border: 1px solid rgba(197, 160, 89, 0.25);
+  }
+  .mock-search-grid {
+    display: grid;
+    grid-template-columns: 2fr 1.5fr 1.5fr 1fr;
+    gap: 1rem;
+    align-items: end;
+  }
+  .mock-input-gp {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+  .mock-input-gp label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #9ca3af;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  .mock-select {
+    background: #1b1d22;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 8px;
+    padding: 0.6rem 0.8rem;
+    color: #f3f4f6;
+    font-size: 0.85rem;
+    width: 100%;
+  }
+  .mock-btn-search {
+    background: #c5a059;
+    color: #0a0b0d;
+    font-weight: 700;
+    padding: 0.65rem;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+  .mock-btn-search:hover {
+    background: #b28e46;
+    box-shadow: 0 0 15px rgba(197, 160, 89, 0.3);
+  }
+
+  /* Grid listings */
+  .listings-section {
+    margin-top: 3rem;
+  }
+  .section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+  }
+  .section-title {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #f3f4f6;
+  }
+  .listings-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+  }
+
+  /* Card Redesign */
+  .mock-card {
+    background: #121316;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    overflow: hidden;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    position: relative;
+  }
+  .mock-card:hover {
+    transform: translateY(-5px);
+    border-color: rgba(197, 160, 89, 0.3);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+  }
+  .mock-card-img {
+    height: 180px;
+    background: #1b1d22;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #9ca3af;
+    font-size: 0.8rem;
+  }
+  .mock-card-badge {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background: rgba(10, 11, 13, 0.8);
+    backdrop-filter: blur(4px);
+    border: 1px solid rgba(197, 160, 89, 0.3);
+    color: #c5a059;
+    padding: 0.2rem 0.6rem;
+    border-radius: 4px;
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+  }
+  .mock-card-ia-score {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: rgba(5, 150, 105, 0.85);
+    backdrop-filter: blur(4px);
+    color: #ffffff;
+    padding: 0.2rem 0.6rem;
+    border-radius: 4px;
+    font-size: 0.7rem;
+    font-weight: 700;
+  }
+  .mock-card-body {
+    padding: 1.2rem;
+  }
+  .mock-card-price {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #c5a059;
+    margin-bottom: 0.3rem;
+  }
+  .mock-card-title {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #f3f4f6;
+    margin-bottom: 0.5rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .mock-card-loc {
+    color: #9ca3af;
+    font-size: 0.8rem;
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    margin-bottom: 0.8rem;
+  }
+  .mock-card-specs {
+    display: flex;
+    gap: 1rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    padding-top: 0.8rem;
+    color: #9ca3af;
+    font-size: 0.75rem;
+  }
+  .mock-card-spec-item {
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+  }
+</style>
+
+<div class="portal-mockup">
+  <!-- Header -->
+  <div class="mock-header">
+    <div class="mock-logo">
+      <div class="mock-logo-icon">M</div>
+      <span class="mock-logo-text">MudaT</span>
+    </div>
+    <div class="mock-nav">
+      <span class="active">Inicio</span>
+      <span>Comprar</span>
+      <span>Rentar</span>
+      <span>Preventa</span>
+      <span>Calculadora</span>
+      <span>Asesores CRM</span>
+    </div>
+    <div style="font-size: 0.8rem; border: 1px solid rgba(197, 160, 89, 0.3); padding: 0.3rem 0.8rem; border-radius: 6px; color: #c5a059; font-weight: 600;">
+      Mi Portal
+    </div>
+  </div>
+
+  <!-- Hero & Buscador -->
+  <div class="mock-hero">
+    <h1 class="mock-title">Tu próximo hogar<br>comienza aquí.</h1>
+    <p class="mock-subtitle">Buscador unificado de propiedades de lujo, preventas exclusivas y análisis de plusvalías inteligentes.</p>
+    
+    <!-- Widget de Búsqueda Estilo Portales Líderes -->
+    <div class="mock-search-widget">
+      <div class="mock-search-tabs">
+        <div class="mock-tab active">COMPRAR</div>
+        <div class="mock-tab">RENTAR</div>
+        <div class="mock-tab">PREVENTAS</div>
+        <div class="mock-tab">LOTES / TERRENOS</div>
+      </div>
+      <div class="mock-search-grid">
+        <div class="mock-input-gp">
+          <label>¿Dónde buscas?</label>
+          <select class="mock-select">
+            <option>Polanco, CDMX</option>
+            <option>Lomas de Chapultepec, CDMX</option>
+            <option>San Pedro Garza García, NL</option>
+            <option>Tulum, Quintana Roo</option>
+          </select>
+        </div>
+        <div class="mock-input-gp">
+          <label>Presupuesto Máx</label>
+          <select class="mock-select">
+            <option>$15,000,000 MXN</option>
+            <option>$30,000,000 MXN</option>
+            <option>$50,000,000+ MXN</option>
+          </select>
+        </div>
+        <div class="mock-input-gp">
+          <label>Recámaras</label>
+          <select class="mock-select">
+            <option>2+ recámaras</option>
+            <option>3+ recámaras</option>
+            <option>4+ recámaras</option>
+          </select>
+        </div>
+        <div class="mock-btn-search">
+          <span>Buscar</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Listings Grid -->
+  <div class="listings-section">
+    <div class="section-header">
+      <div class="section-title">Propiedades Destacadas (SaaS Gold)</div>
+      <div style="font-size: 0.8rem; color: #c5a059; cursor: pointer; font-weight: 600;">Ver todas →</div>
+    </div>
+    <div class="listings-grid">
+      <!-- Card 1 -->
+      <div class="mock-card">
+        <span class="mock-card-badge">Exclusivo</span>
+        <span class="mock-card-ia-score">9.8 IA Score</span>
+        <div class="mock-card-img">
+          <span>[ Foto Penthouse Polanco ]</span>
+        </div>
+        <div class="mock-card-body">
+          <p class="mock-card-price">$28,500,000 MXN</p>
+          <h4 class="mock-card-title">Penthouse de Lujo en Campos Elíseos</h4>
+          <p class="mock-card-loc">📍 Polanco, CDMX</p>
+          <div class="mock-card-specs">
+            <div class="mock-card-spec-item">3 rec</div>
+            <div class="mock-card-spec-item">3.5 baños</div>
+            <div class="mock-card-spec-item">320 m²</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 2 -->
+      <div class="mock-card">
+        <span class="mock-card-badge">Preventa</span>
+        <span class="mock-card-ia-score">9.2 IA Score</span>
+        <div class="mock-card-img">
+          <span>[ Residencia San Pedro ]</span>
+        </div>
+        <div class="mock-card-body">
+          <p class="mock-card-price">$42,000,000 MXN</p>
+          <h4 class="mock-card-title">Residencia Exclusiva en Las Misiones</h4>
+          <p class="mock-card-loc">📍 San Pedro Garza García, NL</p>
+          <div class="mock-card-specs">
+            <div class="mock-card-spec-item">4 rec</div>
+            <div class="mock-card-spec-item">5 baños</div>
+            <div class="mock-card-spec-item">550 m²</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 3 -->
+      <div class="mock-card">
+        <span class="mock-card-badge">Oportunidad</span>
+        <span class="mock-card-ia-score">9.5 IA Score</span>
+        <div class="mock-card-img">
+          <span>[ Villa Eco-Luxury Tulum ]</span>
+        </div>
+        <div class="mock-card-body">
+          <p class="mock-card-price">$18,900,000 MXN</p>
+          <h4 class="mock-card-title">Eco-Villa Sustentable con Alberca Privada</h4>
+          <p class="mock-card-loc">📍 Selva Zama, Tulum</p>
+          <div class="mock-card-specs">
+            <div class="mock-card-spec-item">3 rec</div>
+            <div class="mock-card-spec-item">3 baños</div>
+            <div class="mock-card-spec-item">280 m²</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div style="margin-top: 1.5rem; text-align: center;">
+  <p class="font-sm text-secondary">La maqueta estructural del portal ya está cargada. Por favor, selecciona una opción o confirma si estás de acuerdo con este enfoque de rediseño de alta gama.</p>
+</div>

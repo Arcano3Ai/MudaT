@@ -1,0 +1,214 @@
+<h2>Enfoques para la Estética Ultra-Premium (Glow & Glassmorphism)</h2>
+<p class="subtitle">Selecciona uno de los tres enfoques propuestos para ver cómo transformarán la interfaz de MudaT en una experiencia visual de alto lujo.</p>
+
+<style>
+  .approaches-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 1.5rem;
+    margin: 2rem 0;
+  }
+  
+  .approach-card {
+    background: #121316;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 14px;
+    padding: 1.5rem;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .approach-card:hover {
+    transform: translateY(-4px);
+    border-color: #c5a059;
+  }
+  
+  .approach-card.selected {
+    border-color: #c5a059;
+    box-shadow: 0 0 20px rgba(197, 160, 89, 0.15);
+  }
+  
+  .badge {
+    display: inline-block;
+    padding: 0.25rem 0.75rem;
+    border-radius: 99px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    background: rgba(255, 255, 255, 0.05);
+    color: #9ca3af;
+  }
+  
+  .badge-recommended {
+    background: rgba(197, 160, 89, 0.15);
+    color: #c5a059;
+    border: 1px solid rgba(197, 160, 89, 0.3);
+  }
+  
+  .preview-box {
+    height: 140px;
+    border-radius: 10px;
+    margin: 1rem 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  /* Enfoque 1 Preview: Glassmorphism Puro */
+  .preview-glass {
+    background: linear-gradient(135deg, #0a0b0d 0%, #1a1c23 100%);
+  }
+  .preview-glass .glass-element {
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 10px;
+    padding: 1rem;
+    width: 80%;
+    color: #f3f4f6;
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+    text-align: center;
+    font-size: 0.85rem;
+    letter-spacing: 0.5px;
+  }
+  .preview-glass .glow-dot {
+    position: absolute;
+    width: 60px;
+    height: 60px;
+    background: radial-gradient(circle, rgba(197, 160, 89, 0.4) 0%, rgba(197, 160, 89, 0) 70%);
+    top: 20%;
+    left: 20%;
+    filter: blur(5px);
+  }
+
+  /* Enfoque 2 Preview: Quiet Luxury */
+  .preview-quiet {
+    background: #0a0b0d;
+  }
+  .preview-quiet .quiet-element {
+    background: #121316;
+    border-left: 2px solid #c5a059;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    border-right: 1px solid rgba(255, 255, 255, 0.05);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 6px;
+    padding: 0.75rem 1.2rem;
+    width: 80%;
+    color: #f3f4f6;
+    text-align: center;
+    font-size: 0.85rem;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  }
+
+  /* Enfoque 3 Preview: Híbrido Reactivo */
+  .preview-hybrid {
+    background: linear-gradient(135deg, #0a0b0d 0%, #121316 100%);
+  }
+  .preview-hybrid .hybrid-element {
+    background: rgba(18, 19, 22, 0.8);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    padding: 1rem;
+    width: 80%;
+    color: #f3f4f6;
+    text-align: center;
+    font-size: 0.85rem;
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+  }
+  .preview-hybrid:hover .hybrid-element {
+    border-color: rgba(197, 160, 89, 0.3);
+    box-shadow: 0 4px 24px rgba(197, 160, 89, 0.1);
+  }
+  
+  .tech-specs {
+    margin-top: 1rem;
+    font-size: 0.8rem;
+    color: #9ca3af;
+    line-height: 1.4;
+  }
+  .tech-specs ul {
+    padding-left: 1.1rem;
+    margin-top: 0.4rem;
+  }
+  .tech-specs li {
+    margin-bottom: 0.2rem;
+  }
+</style>
+
+<div class="approaches-grid">
+  <!-- Opción 1 -->
+  <div class="approach-card" data-choice="opcion-1" onclick="toggleSelect(this)">
+    <span class="badge">Opción A.1</span>
+    <h3>Glassmorphism Puro & Glows Absolutos</h3>
+    <p class="font-sm text-secondary">Efecto futurista y tridimensional con desenfoques intensos de fondo y puntos de luz difusos.</p>
+    
+    <div class="preview-box preview-glass">
+      <div class="glow-dot"></div>
+      <div class="glass-element">PROPIEDAD DESTACADA</div>
+    </div>
+    
+    <div class="tech-specs">
+      <strong>Detalles Técnicos:</strong>
+      <ul>
+        <li><code>backdrop-filter: blur(12px)</code> de alta densidad.</li>
+        <li>Bordes semitransparentes del 8% de opacidad.</li>
+        <li>Gradientes de brillo de fondo posicionados de forma absoluta.</li>
+        <li>Sombras pesadas multi-capa para realzar la profundidad.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Opción 2 -->
+  <div class="approach-card" data-choice="opcion-2" onclick="toggleSelect(this)">
+    <span class="badge">Opción A.2</span>
+    <h3>Lujo Silencioso ("Quiet Luxury")</h3>
+    <p class="font-sm text-secondary">Estética minimalista ejecutiva que prioriza el alto rendimiento, líneas finas y excelente legibilidad.</p>
+    
+    <div class="preview-box preview-quiet">
+      <div class="quiet-element">PROPIEDAD DESTACADA</div>
+    </div>
+    
+    <div class="tech-specs">
+      <strong>Detalles Técnicos:</strong>
+      <ul>
+        <li>Base de color negro sólido (Obsidian) de excelente contraste.</li>
+        <li>Borde de acento izquierdo de 2px en oro champagne.</li>
+        <li>Sombras suaves y bordes de 1px con opacidad controlada.</li>
+        <li>Cero impacto en GPU (sin filtros de desenfoque de fondo).</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Opción 3 -->
+  <div class="approach-card selected" data-choice="opcion-3" onclick="toggleSelect(this)">
+    <span class="badge badge-recommended">★ RECOMENDADO</span>
+    <h3>Híbrido Dinámico Reactivo</h3>
+    <p class="font-sm text-secondary">El balance perfecto: minimalismo fluido como base, reservando el Glassmorphism y Glows para elementos interactivos clave.</p>
+    
+    <div class="preview-box preview-hybrid">
+      <div class="hybrid-element">PROPIEDAD DESTACADA</div>
+    </div>
+    
+    <div class="tech-specs">
+      <strong>Detalles Técnicos:</strong>
+      <ul>
+        <li>Buscador, Header y Tarjetas con Glassmorphism suave (8px).</li>
+        <li>Bordes interactivos que se iluminan al pasar el cursor (Hover Glow).</li>
+        <li>Fondo general con micro-textura de cuadrícula corporativa.</li>
+        <li>Rendimiento optimizado al limitar los filtros de desenfoque.</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div style="margin-top: 1.5rem; text-align: center;">
+  <p class="font-sm text-secondary">Abre <strong>http://localhost:52341</strong> en tu navegador para ver la representación visual interactiva.</p>
+</div>

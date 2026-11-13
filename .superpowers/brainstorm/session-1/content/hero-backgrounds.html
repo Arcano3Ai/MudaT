@@ -1,0 +1,141 @@
+<style>
+  .hero-mockup-container {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    padding: 1rem;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+  }
+  
+  .hero-option {
+    position: relative;
+    border-radius: 16px;
+    overflow: hidden;
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: all 0.3s ease;
+    height: 350px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+  }
+  
+  .hero-option:hover {
+    transform: translateY(-5px);
+    border-color: #c5a059;
+    box-shadow: 0 10px 30px rgba(197, 160, 89, 0.2);
+  }
+  
+  .hero-option.selected {
+    border-color: #c5a059;
+    box-shadow: 0 0 0 4px rgba(197, 160, 89, 0.3);
+  }
+
+  .badge {
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+    background: rgba(0,0,0,0.6);
+    color: white;
+    padding: 0.3rem 0.8rem;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: bold;
+    z-index: 10;
+    backdrop-filter: blur(4px);
+    border: 1px solid rgba(255,255,255,0.2);
+  }
+
+  /* Option A: Photographic Architecture */
+  .hero-a {
+    background: linear-gradient(rgba(10, 11, 13, 0.7), rgba(10, 11, 13, 0.9)),
+                url('https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=1600&q=80') center/cover;
+  }
+
+  /* Option B: Geometric Abstract (Current but enhanced) */
+  .hero-b {
+    background: #0a0b0d;
+    background-image: 
+      radial-gradient(circle at 15% 50%, rgba(197, 160, 89, 0.15), transparent 25%),
+      radial-gradient(circle at 85% 30%, rgba(16, 185, 129, 0.1), transparent 25%),
+      linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+    background-size: 100% 100%, 100% 100%, 40px 40px, 40px 40px;
+  }
+
+  /* Option C: Cinematic Video/Gradient Overlay */
+  .hero-c {
+    background: linear-gradient(135deg, rgba(10,11,13,0.9) 0%, rgba(197, 160, 89, 0.2) 100%),
+                url('https://images.unsplash.com/photo-1613490493576-7fde63acd811?auto=format&fit=crop&w=1600&q=80') center/cover;
+    mix-blend-mode: multiply;
+  }
+  .hero-c::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0; height: 50%;
+    background: linear-gradient(to top, #0a0b0d, transparent);
+  }
+
+  .mock-title {
+    font-size: 2.8rem;
+    font-weight: 800;
+    color: white;
+    margin-bottom: 1rem;
+    z-index: 2;
+    text-shadow: 0 4px 20px rgba(0,0,0,0.5);
+    font-family: 'Outfit', sans-serif;
+  }
+  
+  .mock-subtitle {
+    color: #e5e7eb;
+    font-size: 1.1rem;
+    max-width: 600px;
+    z-index: 2;
+    text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+  }
+  
+  .mock-search {
+    width: 80%;
+    height: 60px;
+    background: rgba(255,255,255,0.1);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 12px;
+    margin-top: 2rem;
+    z-index: 2;
+  }
+</style>
+
+<h2>Opciones de Fondo para el Hero (Alto Impacto)</h2>
+<p class="subtitle">He preparado tres enfoques visuales para hacer que el inicio sea espectacular. Haz clic en la opción que más te guste.</p>
+
+<div class="hero-mockup-container">
+  
+  <!-- Opción A -->
+  <div class="hero-option hero-a" data-choice="A" onclick="toggleSelect(this)">
+    <div class="badge">A. Arquitectura Fotográfica (Estilo Revista de Lujo)</div>
+    <h2 class="mock-title">Encuentra tu próximo hogar</h2>
+    <p class="mock-subtitle">Fondo fotográfico inmobiliario premium oscurecido para resaltar el buscador de cristal.</p>
+    <div class="mock-search"></div>
+  </div>
+
+  <!-- Opción B -->
+  <div class="hero-option hero-b selected" data-choice="B" onclick="toggleSelect(this)">
+    <div class="badge">B. Abstracción Tecnológica (Geometría y Glows)</div>
+    <h2 class="mock-title">Encuentra tu próximo hogar</h2>
+    <p class="mock-subtitle">Retiene el color sólido Obsidian Black pero inyecta luces volumétricas asimétricas y una grilla arquitectónica muy fina.</p>
+    <div class="mock-search"></div>
+  </div>
+
+  <!-- Opción C -->
+  <div class="hero-option hero-c" data-choice="C" onclick="toggleSelect(this)">
+    <div class="badge">C. Gradiente Cinemático (Fusión Visual)</div>
+    <h2 class="mock-title">Encuentra tu próximo hogar</h2>
+    <p class="mock-subtitle">Combina una fotografía arquitectónica de alto contraste con un lavado de color Champagne Gold y un fundido a negro (fade-to-black) suave.</p>
+    <div class="mock-search"></div>
+  </div>
+
+</div>
+<p style="text-align:center; color:#6b7280; font-size:0.8rem; margin-top:1rem;">Elige una opción para inyectar este estilo directamente en style.css.</p>

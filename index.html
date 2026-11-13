@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MudaT - Tu próximo hogar comienza aquí</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%236366f1'/><text x='50%25' y='65%25' font-size='60' font-weight='bold' fill='white' text-anchor='middle' font-family='sans-serif'>M</text></svg>">
+  <!-- Schema.org SEO Structured Data for Real Estate -->
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "RealEstateAgent",
+      "name": "MudaT",
+      "image": "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=600&q=80",
+      "@id": "https://mudat.mx",
+      "url": "https://mudat.mx",
+      "telephone": "+525512345678",
+      "priceRange": "$$$",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Campos Elíseos 180",
+        "addressLocality": "CDMX",
+        "addressRegion": "CDMX",
+        "postalCode": "11560",
+        "addressCountry": "MX"
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": 19.4300,
+        "longitude": -99.1950
+      },
+      "openingHoursSpecification": {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": [
+          "Monday",
+          "Tuesday",
+          "Wednesday",
+          "Thursday",
+          "Friday",
+          "Saturday"
+        ],
+        "opens": "09:00",
+        "closes": "18:00"
+      }
+    }
+  </script>
+  <link rel="stylesheet" href="./style.css">
+  <!-- Lucide Icons CDN -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body class="dark-theme"> <!-- Dark Theme activado por defecto para estética premium -->
+
+  <!-- Header -->
+  <header>
+    <div class="header-container">
+      <a href="#inicio" class="logo-section" id="logo-link">
+        <div class="logo-icon">M</div>
+        <div>
+          <h1 class="logo-text">MudaT</h1>
+          <p class="logo-slogan">Tu próximo hogar comienza aquí</p>
+        </div>
+      </a>
+
+      <!-- Menú de Navegación Dinámico -->
+      <nav>
+        <ul class="nav-links" id="main-nav">
+          <li><a href="#inicio" class="nav-item active" data-view="home">Inicio</a></li>
+          <li><a href="#comprar" class="nav-item" data-view="comprar">Comprar</a></li>
+          <li><a href="#rentar" class="nav-item" data-view="rentar">Rentar</a></li>
+          <li><a href="#desarrollos" class="nav-item" data-view="preventa">Desarrollos</a></li>
+          <li><a href="#asesores" class="nav-item" data-view="crm">Asesores (CRM)</a></li>
+          <li><a href="#calculadora" class="nav-item" data-view="calculator">Calculadora</a></li>
+          <li><a href="#publicar" class="nav-item" data-view="publish">Publicar</a></li>
+        </ul>
+      </nav>
+
+      <!-- Acciones de Usuario e Integraciones de Simulación SaaS -->
+      <div class="header-actions">
+        <!-- Modo Claro/Oscuro Conmutador Segmentado -->
+        <div class="theme-switcher-capsule" id="theme-switcher" title="Cambiar Tema">
+          <div class="theme-switcher-slider"></div>
+          <button class="theme-btn active" id="theme-btn-dark" data-theme="dark">
+            <i data-lucide="moon"></i> <span>Oscuro</span>
+          </button>
+          <button class="theme-btn" id="theme-btn-light" data-theme="light">
+            <i data-lucide="sun"></i> <span>Claro</span>
+          </button>
+        </div>
+
+        <!-- Botón de Inicio de Sesión Ultra-Premium -->
+        <button class="btn-login-premium" id="login-btn">
+          <i data-lucide="user" class="icon-inline"></i>
+          <span>Iniciar sesión</span>
+        </button>
+        
+        <!-- Botón de Menú Móvil Hamburguesa -->
+        <button class="btn-icon" id="mobile-menu-toggle" title="Menú Navegación">
+          <i data-lucide="menu"></i>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Contenedor Principal de Vistas (SPA) -->
+  <main id="app-root" class="fade-in"></main>
+
+  <!-- Widget Flotante del Asistente IA -->
+  <div class="ai-chatbot-widget" id="ai-chatbot">
+    <button class="ai-chatbot-btn" id="ai-chatbot-toggle">
+      <i data-lucide="message-square-code"></i>
+    </button>
+    <div class="ai-chatbot-window glass-premium glow-brand" id="ai-chatbot-window">
+      <div class="ai-chat-header">
+        <div class="ai-chat-title-group">
+          <h4>Asistente Inteligente MudaT</h4>
+          <p>Online • Powered by IA</p>
+        </div>
+        <button class="btn-icon ai-chat-close-btn" id="ai-chatbot-close">
+          <i data-lucide="x"></i>
+        </button>
+      </div>
+      <div class="ai-chat-body" id="ai-chat-body">
+        <div class="chat-message bot">
+          ¡Hola! Soy tu asistente inteligente de MudaT. ¿En qué puedo ayudarte hoy?
+          <br><br>
+          Puedes preguntarme sobre:
+          <br>• El costo de inmuebles en una zona.
+          <br>• Créditos y simulaciones hipotecarias.
+          <br>• Retornos de inversión (ROI).
+          <br>• Plusvalías de colonias.
+        </div>
+      </div>
+      <div class="chat-quick-replies" id="chat-quick-replies">
+        <button class="quick-reply-btn" data-query="¿Qué zona tiene mayor plusvalía?">¿Zonas con mayor plusvalía?</button>
+        <button class="quick-reply-btn" data-query="¿Cómo calculo mi mensualidad hipotecaria?">¿Cómo calcular mensualidad?</button>
+        <button class="quick-reply-btn" data-query="¿Cuál es el retorno de inversión (ROI) promedio?">¿ROI promedio?</button>
+      </div>
+      <div class="ai-chat-footer">
+        <input type="text" class="ai-chat-input" id="ai-chat-input" placeholder="Pregúntale a la IA...">
+        <button class="btn btn-primary btn-sm" id="ai-chat-send">
+          <i data-lucide="send"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-container">
+      <div class="footer-about">
+        <h3>MudaT</h3>
+        <p class="text-secondary font-sm margin-bottom-md">MudaT. Tu próximo hogar comienza aquí.</p>
+        <p class="text-muted font-xs">La plataforma inmobiliaria SaaS líder en México y Latinoamérica que unifica a clientes, asesores e inmobiliarias en una experiencia basada en inteligencia artificial.</p>
+      </div>
+      <div class="footer-column">
+        <h4>Buscar Propiedades</h4>
+        <ul>
+          <li><a href="#comprar">Casas en Venta</a></li>
+          <li><a href="#rentar">Departamentos en Renta</a></li>
+          <li><a href="#desarrollos">Preventas Exclusivas</a></li>
+          <li><a href="#inicio">Terrenos Comerciales</a></li>
+        </ul>
+      </div>
+      <div class="footer-column">
+        <h4>Servicios del Ecosistema</h4>
+        <ul>
+          <li><a href="#calculadora">Créditos Hipotecarios</a></li>
+          <li><a href="#avaluos">Avalúos Certificados</a></li>
+          <li><a href="#legal">Marketplace Legal</a></li>
+          <li><a href="#asesores">Red de Asesores</a></li>
+        </ul>
+      </div>
+      <div class="footer-column">
+        <h4>Contacto y Soporte</h4>
+        <ul>
+          <li><a href="mailto:soporte@mudat.mx">soporte@mudat.mx</a></li>
+          <li><a href="https://wa.me/525512345678" target="_blank">WhatsApp Soporte</a></li>
+          <li><a href="#inicio">Preguntas Frecuentes</a></li>
+          <li><a href="#inicio">Políticas de Privacidad</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2026 MudaT SAAS Platform. Todos los derechos reservados.</p>
+      <div class="display-flex gap-md">
+        <a href="#">Términos de Servicio</a>
+        <a href="#">Privacidad</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Modal de Inicio de Sesión Premium -->
+  <div id="login-modal" class="login-modal-overlay display-none">
+    <div class="login-modal-card glass-premium glow-brand">
+      <button id="close-login-btn" class="login-modal-close-btn">&times;</button>
+      <h3 class="login-modal-title">Acceso Exclusivo MudaT</h3>
+      <p class="login-modal-subtitle">Inicia sesión en tu cuenta PropTech o ingresa rápido seleccionando un perfil de demostración.</p>
+      
+      <form id="login-form" class="pub-form" style="border:none; padding:0; background:transparent; margin-bottom:1.5rem;">
+        <div class="filter-group">
+          <label>Correo Electrónico</label>
+          <input type="email" class="filter-input" placeholder="ejemplo@mudat.mx" id="login-email" required>
+        </div>
+        <div class="filter-group" style="margin-top:1rem;">
+          <label>Contraseña</label>
+          <input type="password" class="filter-input" placeholder="••••••••" id="login-password" required>
+        </div>
+        <button type="submit" class="btn btn-primary btn-full-width" style="margin-top:1.5rem;">Ingresar Seguro</button>
+      </form>
+
+      <div class="login-divider"><span>O INGRESAR CON PERFIL DEMO</span></div>
+
+      <div class="demo-profiles-row">
+        <div class="demo-profile-badge" data-demo-role="client">
+          <img src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=150&q=80" alt="Sergio">
+          <span>Cliente</span>
+        </div>
+        <div class="demo-profile-badge" data-demo-role="advisor">
+          <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=150&q=80" alt="Sofía">
+          <span>Asesor CRM</span>
+        </div>
+        <div class="demo-profile-badge" data-demo-role="admin">
+          <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=150&q=80" alt="Admin">
+          <span>Admin SaaS</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- App Entrypoint Script -->
+  <script type="module" src="./app.js"></script>
+</body>
+</html>
