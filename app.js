@@ -42,13 +42,26 @@ const routes = {
     return renderClientDashboard(state);
   },
   "crm": async () => {
-    if (!state.currentUser || state.currentUser.role === "client") {
-      alert(L(
-        "Accediendo a la sección de Asesores. Se cambiará el rol a Asesor para demostración.",
-        "Accessing the Advisors section. Switching role to Advisor for demonstration."
-      ));
-      state.currentUser = switchUserRole("advisor");
-      updateHeaderUI(state);
+    if (!state.currentUser || (state.currentUser.role !== "advisor" && state.currentUser.role !== "admin")) {
+      return {
+        html: `
+          <div class="section-container fade-in" style="max-width:620px; text-align:center; padding:4rem 1.5rem;">
+            <span class="section-tagline">${L("Acceso Restringido", "Restricted Access")}</span>
+            <h2 style="margin:0.5rem 0 0.75rem;">${L("Portal exclusivo para Asesores MudaT", "Exclusive Portal for MudaT Advisors")}</h2>
+            <p class="text-secondary" style="margin-bottom:1.5rem;">
+              ${L("Inicia sesión con tu cuenta de asesor certificado para acceder al CRM, cartera y creación de perfiles.", "Sign in with your certified advisor account to access the CRM, portfolio, and client profile creation.")}
+            </p>
+            <button type="button" class="btn btn-primary" id="open-advisor-login-gate">
+              ${L("Iniciar sesión como Asesor", "Sign in as Advisor")}
+            </button>
+          </div>
+        `,
+        init: () => {
+          document.getElementById("open-advisor-login-gate")?.addEventListener("click", () => {
+            window.dispatchEvent(new CustomEvent("mudat_open_login", { detail: { role: "advisor" } }));
+          });
+        }
+      };
     }
     const { renderAdvisorDashboard } = await import("./src/views/AdvisorDashboard.js?v=20261120");
     return renderAdvisorDashboard(state);

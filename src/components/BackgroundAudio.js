@@ -15,7 +15,7 @@ export function initBackgroundAudio() {
   audio.id = "mudat-bg-audio";
   audio.src = "./assets/audio/mudate.mp3";
   audio.loop = true;
-  audio.preload = "auto";
+  audio.preload = "none";
   audio.volume = 0.35;
   document.body.appendChild(audio);
 

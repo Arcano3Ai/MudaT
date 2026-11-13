@@ -63,7 +63,7 @@ export function getCurrentUser() {
   return JSON.parse(localStorage.getItem("mudat_current_user"));
 }
 
-export function authenticateCredentials(usernameOrEmail, password) {
+export function authenticateCredentials(usernameOrEmail, password, expectedRole = "any") {
   initializeAuth();
   const users = JSON.parse(localStorage.getItem("mudat_users"));
   const identifier = (usernameOrEmail || "").trim().toLowerCase();
@@ -81,6 +81,10 @@ export function authenticateCredentials(usernameOrEmail, password) {
     localStorage.setItem("mudat_current_user", JSON.stringify(advisorUser));
     window.dispatchEvent(new Event("mudat_auth_change"));
     return { ok: true, user: advisorUser };
+  }
+
+  if (expectedRole === "advisor") {
+    return { ok: false, error: "Credenciales de asesor no reconocidas." };
   }
 
   // Validar contra perfiles de clientes creados por el asesor

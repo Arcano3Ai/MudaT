@@ -65,7 +65,7 @@
       }
     }
   </script>
-  <link rel="stylesheet" href="./style.css?v=20261120">
+  <link rel="stylesheet" href="./style.css?v=20261121">
   <!-- Lucide Icons CDN -->
   <script src="https://unpkg.com/lucide@latest"></script>
 </head>
@@ -85,9 +85,9 @@
           <li><a href="#comprar" class="nav-item" data-view="comprar">Comprar</a></li>
           <li><a href="#rentar" class="nav-item" data-view="rentar">Rentar</a></li>
           <li><a href="#desarrollos" class="nav-item" data-view="preventa">Desarrollos</a></li>
-          <li><a href="#asesores" class="nav-item" data-view="crm">Asesores (CRM)</a></li>
           <li><a href="#calculadora" class="nav-item" data-view="calculator">Calculadora</a></li>
           <li><a href="#publicar" class="nav-item" data-view="publish">Publicar</a></li>
+          <li id="nav-portal-item" class="display-none"><a href="#mi-portal" class="nav-item" id="nav-portal-link" data-view="portal">Mi Portal</a></li>
         </ul>
       </nav>
 
@@ -217,12 +217,17 @@
     <div class="login-modal-card glass-premium glow-brand">
       <button id="close-login-btn" class="login-modal-close-btn">&times;</button>
       <h3 class="login-modal-title">Acceso Exclusivo MudaT</h3>
-      <p class="login-modal-subtitle">Inicia sesión con tu cuenta o con las credenciales proporcionadas por tu asesor.</p>
+      <p class="login-modal-subtitle">Selecciona tu tipo de cuenta e ingresa con tus credenciales.</p>
+
+      <div class="login-role-tabs" role="tablist" aria-label="Tipo de acceso">
+        <button type="button" class="login-role-tab active" id="login-role-client" data-role="client">👤 Cliente</button>
+        <button type="button" class="login-role-tab" id="login-role-advisor" data-role="advisor">💼 Asesor</button>
+      </div>
       
       <form id="login-form" class="pub-form" style="border:none; padding:0; background:transparent; margin-bottom:0.25rem;">
         <div class="filter-group">
           <label>Usuario o Correo Electrónico</label>
-          <input type="text" class="filter-input" placeholder="Yesenia Cuevas" id="login-email" required>
+          <input type="text" class="filter-input" placeholder="cliente@correo.com" id="login-email" required>
         </div>
         <div class="filter-group" style="margin-top:1rem;">
           <label>Contraseña</label>
@@ -235,6 +240,6 @@
   </div>
 
   <!-- App Entrypoint Script -->
-  <script type="module" src="./app.js?v=20261120"></script>
+  <script type="module" src="./app.js?v=20261121"></script>
 </body>
 </html>

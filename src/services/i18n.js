@@ -207,8 +207,10 @@ export function applyStaticTranslations(lang = getLang()) {
   // Modal Login
   setText(".login-modal-title", en ? "MudaT Exclusive Access" : "Acceso Exclusivo MudaT");
   setText(".login-modal-subtitle", en
-    ? "Sign in with your account or with the credentials provided by your advisor."
-    : "Inicia sesión con tu cuenta o con las credenciales proporcionadas por tu asesor.");
+    ? "Select your account type and sign in with your credentials."
+    : "Selecciona tu tipo de cuenta e ingresa con tus credenciales.");
+  setText("#login-role-client", en ? "👤 Client" : "👤 Cliente");
+  setText("#login-role-advisor", en ? "💼 Advisor" : "💼 Asesor");
   const loginLabels = document.querySelectorAll("#login-form label");
   if (loginLabels.length >= 2) {
     loginLabels[0].textContent = en ? "Username or Email" : "Usuario o Correo Electrónico";

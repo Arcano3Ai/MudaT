@@ -97,9 +97,29 @@ export function initHeader(state, onAuthChangeCallback) {
   const modal = document.getElementById("login-modal");
   const closeBtn = document.getElementById("close-login-btn");
   const loginForm = document.getElementById("login-form");
+  const roleClientBtn = document.getElementById("login-role-client");
+  const roleAdvisorBtn = document.getElementById("login-role-advisor");
+  const loginEmailInput = document.getElementById("login-email");
+  let selectedLoginRole = "client";
+
+  const setLoginRole = (role) => {
+    selectedLoginRole = role === "advisor" ? "advisor" : "client";
+    roleClientBtn?.classList.toggle("active", selectedLoginRole === "client");
+    roleAdvisorBtn?.classList.toggle("active", selectedLoginRole === "advisor");
+    if (loginEmailInput) {
+      loginEmailInput.placeholder =
+        selectedLoginRole === "advisor"
+          ? "Yesenia Cuevas"
+          : L("cliente@correo.com", "client@email.com");
+    }
+  };
+
+  roleClientBtn?.addEventListener("click", () => setLoginRole("client"));
+  roleAdvisorBtn?.addEventListener("click", () => setLoginRole("advisor"));
 
   // Función para abrir el modal
-  const openModal = () => {
+  const openModal = (preferredRole = "client") => {
+    setLoginRole(preferredRole);
     const errorEl = document.getElementById("login-error-msg");
     if (errorEl) {
       errorEl.textContent = "";
@@ -108,6 +128,10 @@ export function initHeader(state, onAuthChangeCallback) {
     modal?.classList.remove("display-none");
     modal?.classList.add("fade-in");
   };
+
+  window.addEventListener("mudat_open_login", (e) => {
+    openModal(e?.detail?.role || "client");
+  });
 
   // Función para cerrar el modal
   const closeModal = () => {
@@ -141,7 +165,7 @@ export function initHeader(state, onAuthChangeCallback) {
     const password = document.getElementById("login-password").value;
     const errorEl = document.getElementById("login-error-msg");
 
-    const result = authenticateCredentials(identifier, password);
+    const result = authenticateCredentials(identifier, password, selectedLoginRole);
     if (!result.ok) {
       if (errorEl) {
         errorEl.textContent = result.error;
@@ -158,6 +182,11 @@ export function initHeader(state, onAuthChangeCallback) {
       `¡Bienvenida de vuelta, ${result.user.name}! Sesión iniciada de forma segura.`,
       `Welcome back, ${result.user.name}! Signed in securely.`
     ));
+    if (result.user.role === "advisor") {
+      window.location.hash = "#asesores";
+    } else if (result.user.role === "client") {
+      window.location.hash = "#mi-portal";
+    }
   });
 
   // Clics en Perfiles Demo de Acceso Rápido
@@ -188,6 +217,9 @@ export function updateHeaderUI(state) {
   const user = getCurrentUser();
   state.currentUser = user;
 
+  const portalItem = document.getElementById("nav-portal-item");
+  const portalLink = document.getElementById("nav-portal-link");
+
   if (user) {
     loginBtn.dataset.loggedIn = "1";
     loginBtn.className = "header-user-badge";
@@ -196,6 +228,19 @@ export function updateHeaderUI(state) {
       <span>${user.name.split(' ')[0]}</span>
       <i data-lucide="log-out" style="width:14px; height:14px; margin-left: 0.5rem; opacity:0.7;" title="${L('Cerrar Sesión', 'Sign Out')}"></i>
     `;
+    if (portalItem && portalLink) {
+      portalItem.classList.remove("display-none");
+      if (user.role === "advisor") {
+        portalLink.href = "#asesores";
+        portalLink.textContent = L("Panel CRM", "CRM Portal");
+      } else if (user.role === "admin") {
+        portalLink.href = "#admin";
+        portalLink.textContent = "Admin SaaS";
+      } else {
+        portalLink.href = "#mi-portal";
+        portalLink.textContent = L("Mi Portal", "My Portal");
+      }
+    }
   } else {
     delete loginBtn.dataset.loggedIn;
     loginBtn.className = "btn-login-premium";
@@ -203,6 +248,7 @@ export function updateHeaderUI(state) {
       <i data-lucide="user" class="icon-inline"></i>
       <span>${L("Iniciar sesión", "Sign in")}</span>
     `;
+    portalItem?.classList.add("display-none");
   }
 
   if (window.lucide) window.lucide.createIcons();
