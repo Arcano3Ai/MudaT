@@ -1,6 +1,7 @@
 import { getCurrentUser, switchUserRole, initializeAuth } from "./src/services/auth.js";
 import { mockProperties } from "./src/data/mockProperties.js";
 import { initHeader, updateHeaderUI } from "./src/components/Header.js";
+import { initBackgroundAudio } from "./src/components/BackgroundAudio.js";
 
 // Initialize Authentication
 initializeAuth();
@@ -294,3 +295,4 @@ function simulateAIResponse(query) {
 
 // Start everything
 setupEvents();
+initBackgroundAudio();
