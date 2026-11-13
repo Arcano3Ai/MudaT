@@ -1,5 +1,5 @@
-import { getCurrentUser, switchUserRole, authenticateCredentials, logout } from "../services/auth.js?v=20261120";
-import { getLang, setLang, applyStaticTranslations, L } from "../services/i18n.js";
+import { getCurrentUser, switchUserRole, authenticateCredentials, logout } from "../services/auth.js?v=20261122";
+import { getLang, setLang, applyStaticTranslations, L } from "../services/i18n.js?v=20261122";
 
 /**
  * Inicializa los eventos y comportamientos del Header:
@@ -106,6 +106,13 @@ export function initHeader(state, onAuthChangeCallback) {
     selectedLoginRole = role === "advisor" ? "advisor" : "client";
     roleClientBtn?.classList.toggle("active", selectedLoginRole === "client");
     roleAdvisorBtn?.classList.toggle("active", selectedLoginRole === "advisor");
+    roleClientBtn?.setAttribute("aria-selected", String(selectedLoginRole === "client"));
+    roleAdvisorBtn?.setAttribute("aria-selected", String(selectedLoginRole === "advisor"));
+    const errorEl = document.getElementById("login-error-msg");
+    if (errorEl) {
+      errorEl.textContent = "";
+      errorEl.classList.add("display-none");
+    }
     if (loginEmailInput) {
       loginEmailInput.placeholder =
         selectedLoginRole === "advisor"

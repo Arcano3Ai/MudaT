@@ -1,8 +1,8 @@
-import { getCurrentUser, switchUserRole, initializeAuth } from "./src/services/auth.js?v=20261120";
+import { getCurrentUser, switchUserRole, initializeAuth } from "./src/services/auth.js?v=20261122";
 import { mockProperties } from "./src/data/mockProperties.js";
-import { initHeader, updateHeaderUI } from "./src/components/Header.js";
-import { initBackgroundAudio } from "./src/components/BackgroundAudio.js";
-import { L, applyStaticTranslations } from "./src/services/i18n.js";
+import { initHeader, updateHeaderUI } from "./src/components/Header.js?v=20261122";
+import { initBackgroundAudio } from "./src/components/BackgroundAudio.js?v=20261122";
+import { L, applyStaticTranslations } from "./src/services/i18n.js?v=20261122";
 
 // Initialize Authentication
 initializeAuth();

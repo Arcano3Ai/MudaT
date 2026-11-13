@@ -65,7 +65,7 @@
       }
     }
   </script>
-  <link rel="stylesheet" href="./style.css?v=20261121">
+  <link rel="stylesheet" href="./style.css?v=20261122">
   <!-- Lucide Icons CDN -->
   <script src="https://unpkg.com/lucide@latest"></script>
 </head>
@@ -220,8 +220,8 @@
       <p class="login-modal-subtitle">Selecciona tu tipo de cuenta e ingresa con tus credenciales.</p>
 
       <div class="login-role-tabs" role="tablist" aria-label="Tipo de acceso">
-        <button type="button" class="login-role-tab active" id="login-role-client" data-role="client">👤 Cliente</button>
-        <button type="button" class="login-role-tab" id="login-role-advisor" data-role="advisor">💼 Asesor</button>
+        <button type="button" role="tab" aria-selected="true" class="login-role-tab active" id="login-role-client" data-role="client">👤 Cliente</button>
+        <button type="button" role="tab" aria-selected="false" class="login-role-tab" id="login-role-advisor" data-role="advisor">💼 Asesor</button>
       </div>
       
       <form id="login-form" class="pub-form" style="border:none; padding:0; background:transparent; margin-bottom:0.25rem;">
@@ -240,6 +240,6 @@
   </div>
 
   <!-- App Entrypoint Script -->
-  <script type="module" src="./app.js?v=20261121"></script>
+  <script type="module" src="./app.js?v=20261122"></script>
 </body>
 </html>
