@@ -1,4 +1,4 @@
-import { updateUserProfile } from "../services/auth.js";
+import { updateUserProfile } from "../services/auth.js?v=20261120";
 import { renderPropertyCard } from "../components/PropertyCard.js";
 import { L, tCategory, formatCurrency } from "../services/i18n.js";
 

@@ -1,4 +1,4 @@
-import { getCurrentUser, switchUserRole, authenticateCredentials, logout } from "../services/auth.js";
+import { getCurrentUser, switchUserRole, authenticateCredentials, logout } from "../services/auth.js?v=20261120";
 import { getLang, setLang, applyStaticTranslations, L } from "../services/i18n.js";
 
 /**

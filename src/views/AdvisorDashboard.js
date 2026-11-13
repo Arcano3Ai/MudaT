@@ -1,4 +1,4 @@
-import { updateUserProfile, createClientProfile, getAdvisorCreatedProfiles } from "../services/auth.js";
+import { updateUserProfile, createClientProfile, getAdvisorCreatedProfiles } from "../services/auth.js?v=20261120";
 import { L, tCategory, formatCurrency, getLang } from "../services/i18n.js";
 
 const DEFAULT_CRM_LEADS = [

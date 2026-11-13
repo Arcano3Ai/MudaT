@@ -1,4 +1,4 @@
-import { updateUserProfile } from "../services/auth.js";
+import { updateUserProfile } from "../services/auth.js?v=20261120";
 import { L, tCategory, formatCurrency, getLang } from "../services/i18n.js";
 
 export async function renderClientDashboard(state) {

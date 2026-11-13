@@ -1,4 +1,4 @@
-import { getCurrentUser, switchUserRole, initializeAuth } from "./src/services/auth.js";
+import { getCurrentUser, switchUserRole, initializeAuth } from "./src/services/auth.js?v=20261120";
 import { mockProperties } from "./src/data/mockProperties.js";
 import { initHeader, updateHeaderUI } from "./src/components/Header.js";
 import { initBackgroundAudio } from "./src/components/BackgroundAudio.js";
@@ -50,7 +50,7 @@ const routes = {
       state.currentUser = switchUserRole("advisor");
       updateHeaderUI(state);
     }
-    const { renderAdvisorDashboard } = await import("./src/views/AdvisorDashboard.js");
+    const { renderAdvisorDashboard } = await import("./src/views/AdvisorDashboard.js?v=20261120");
     return renderAdvisorDashboard(state);
   },
   "publish": async () => {
