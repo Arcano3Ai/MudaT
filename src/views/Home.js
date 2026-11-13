@@ -22,12 +22,13 @@ export async function renderHome(state) {
   }).join('');
 
   const html = `
-    <!-- Hero Principal Estilo Inmuebles24 -->
+    <!-- Hero Principal Editorial de Lujo -->
     <section class="hero-section">
       <div class="hero-glow-1"></div>
       <div class="hero-glow-2"></div>
+      <span class="hero-eyebrow">Portfolio Inmobiliario Exclusivo • México</span>
       <h2 class="hero-title">Encuentra tu próximo hogar</h2>
-      <p class="hero-subtitle">El portal inmobiliario número 1 de México. Busca departamentos, casas, preventas y terrenos exclusivos.</p>
+      <p class="hero-subtitle">Propiedades residenciales y de inversión curadas con inteligencia artificial, plusvalía verificada y asesoría patrimonial integral.</p>
 
       <!-- Buscador Unificado Estilo Inmuebles24 -->
       <div class="search-widget glass-premium glow-brand fade-in">

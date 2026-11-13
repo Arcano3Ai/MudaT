@@ -37,14 +37,18 @@ export function renderPropertyCard(prop, isFav, isCompact = false) {
 
   return `
     <div class="${cardClass}" data-prop-id="${prop.id}">
-      <span class="property-type-tag">${prop.category}</span>
-      <span class="property-ia-badge">${iaScoreText}</span>
+      <div class="property-badges-row">
+        <span class="property-type-tag">${prop.category}</span>
+        <span class="property-ia-badge">
+          <span class="ia-dot"></span>${iaScoreText}
+        </span>
+      </div>
       <button class="property-favorite-btn ${favClass}" data-id="${prop.id}" title="Guardar en favoritos">
         <i data-lucide="heart" class="property-card-icon-heart icon-md"></i>
       </button>
-      <div class="${imgWrapperClass}">
-        <img src="${prop.images[0]}" alt="${prop.title}" class="property-img" loading="lazy">
-      </div>
+      <a href="#propiedad/${prop.id}" class="${imgWrapperClass}">
+        <img src="${prop.images[0]}" alt="${prop.title}" class="property-img">
+      </a>
       <div class="${infoBodyClass}">
         <div class="property-location">
           <i data-lucide="map-pin" class="icon-inline icon-sm"></i>
@@ -69,7 +73,7 @@ export function renderPropertyCard(prop, isFav, isCompact = false) {
         </div>
         <div class="property-price-row">
           <span class="property-price">${formattedPrice}${priceSuffix}</span>
-          <a href="#propiedad/${prop.id}" class="btn btn-outline btn-sm">Ver Ficha</a>
+          <a href="#propiedad/${prop.id}" class="btn btn-outline btn-sm property-cta-btn">Ver Ficha <i data-lucide="arrow-up-right" class="icon-inline icon-sm"></i></a>
         </div>
       </div>
     </div>
