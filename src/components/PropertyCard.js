@@ -32,6 +32,9 @@ export function renderPropertyCard(prop, isFav, isCompact = false) {
     ? (parseFloat(prop.plusvalia) + 1.2).toFixed(1) + " IA Score" 
     : "9.2 IA Score";
 
+  const priceSuffix = prop.type === "rent" ? ` <span class="property-price-period">/ mes</span>` : "";
+  const bedroomsLabel = prop.bedrooms > 0 ? `${prop.bedrooms} Rec.` : "Uso Comercial";
+
   return `
     <div class="${cardClass}" data-prop-id="${prop.id}">
       <span class="property-type-tag">${prop.category}</span>
@@ -53,7 +56,7 @@ export function renderPropertyCard(prop, isFav, isCompact = false) {
         <div class="property-specs">
           <div class="property-spec-item">
             <i data-lucide="bed" class="icon-inline icon-md"></i>
-            <span>${prop.bedrooms} Rec.</span>
+            <span>${bedroomsLabel}</span>
           </div>
           <div class="property-spec-item">
             <i data-lucide="bath" class="icon-inline icon-md"></i>
@@ -65,7 +68,7 @@ export function renderPropertyCard(prop, isFav, isCompact = false) {
           </div>
         </div>
         <div class="property-price-row">
-          <span class="property-price">${formattedPrice}</span>
+          <span class="property-price">${formattedPrice}${priceSuffix}</span>
           <a href="#propiedad/${prop.id}" class="btn btn-outline btn-sm">Ver Ficha</a>
         </div>
       </div>

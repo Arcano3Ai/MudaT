@@ -2,11 +2,21 @@ import { updateUserProfile } from "../services/auth.js";
 import { renderPropertyCard } from "../components/PropertyCard.js";
 
 export async function renderHome(state) {
-  // Get 3 featured properties
-  const featured = state.properties.slice(0, 3);
+  // Get 6 featured properties (2 rows of 3 in desktop grid)
+  const featured = state.properties.slice(0, 6);
   
   // Render cards HTML using the reusable PropertyCard component
   const featuredHtml = featured.map(prop => {
+    const isFav = state.currentUser?.favorites?.includes(prop.id);
+    return renderPropertyCard(prop, isFav, false);
+  }).join('');
+
+  // Get curated properties in the 2M - 3M MXN range
+  const midRangeProps = state.properties
+    .filter(p => p.price >= 2000000 && p.price <= 3000000)
+    .slice(0, 3);
+
+  const midRangeHtml = midRangeProps.map(prop => {
     const isFav = state.currentUser?.favorites?.includes(prop.id);
     return renderPropertyCard(prop, isFav, false);
   }).join('');
@@ -149,6 +159,21 @@ export async function renderHome(state) {
       </div>
     </section>
 
+    <!-- Oportunidades Inteligentes ($2M - $3M MXN) -->
+    <section class="section-container">
+      <div class="section-header">
+        <div>
+          <p class="section-tagline">Alta Demanda & Plusvalía</p>
+          <h2 class="section-title">Oportunidades de $2M a $3M MXN</h2>
+        </div>
+        <a href="#comprar" id="btn-explore-midrange" class="btn btn-outline">Explorar rango $2M - $3M</a>
+      </div>
+      
+      <div class="properties-grid">
+        ${midRangeHtml}
+      </div>
+    </section>
+
     <!-- Servicios del Ecosistema -->
     <section class="section-container">
       <p class="section-tagline text-center">Servicios Integrados</p>
@@ -240,6 +265,17 @@ export async function renderHome(state) {
       } else {
         window.location.hash = "#comprar";
       }
+    });
+
+    // Explorar rango $2M - $3M directamente
+    document.getElementById("btn-explore-midrange")?.addEventListener("click", (e) => {
+      e.preventDefault();
+      appState.searchFilters.category = "Comprar";
+      appState.searchFilters.city = "";
+      appState.searchFilters.state = "";
+      appState.searchFilters.budget = "3000000";
+      appState.searchFilters.rooms = "";
+      window.location.hash = "#comprar";
     });
 
     // Manejar botón de Favorito en tarjetas
