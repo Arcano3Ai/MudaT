@@ -174,8 +174,10 @@ export async function renderPropertyDetail(state) {
             <div class="calc-result-display">
               <p class="calc-result-title">${L("Mensualidad Estimada", "Estimated Monthly Payment")}</p>
               <p class="monthly-payment-amount" id="calc-monthly-payment-output">$0.00</p>
-              <p class="calc-disclaimer">${L("*Cálculo informativo. No incluye seguros, avalúo ni escrituración.", "*Informational estimate. Does not include insurance, appraisal, or closing costs.")}</p>
-              <button class="btn btn-success calc-submit-btn" id="calc-preapprove-btn">${L("Solicitar Pre-Aprobación Directa", "Request Direct Pre-Approval")}</button>
+              <p class="calc-disclaimer">${L("*Cálculo simulado e informativo. No incluye seguros, avalúo ni escrituración. Para mayores informes, contacta a un asesor.", "*Simulated informational estimate. Does not include insurance, appraisal, or closing costs. For more information, contact an advisor.")}</p>
+              <a href="https://wa.me/${advisorPhone}?text=${encodeURIComponent(L(`Hola ${prop.advisor.name}, realicé una simulación hipotecaria para "${prop.title}" y quisiera mayores informes.`, `Hi ${prop.advisor.name}, I ran a mortgage simulation for "${prop.title}" and would like more information.`))}" target="_blank" rel="noopener" class="btn btn-primary calc-submit-btn" id="calc-contact-advisor-btn">
+                <i data-lucide="message-circle" class="icon-inline"></i> ${L("Contactar a un Asesor", "Contact an Advisor")}
+              </a>
             </div>
           </div>
 
@@ -499,29 +501,6 @@ export async function renderPropertyDetail(state) {
       ));
     });
     
-    // Solicitar preaprobación de crédito hipotecario
-    document.getElementById("calc-preapprove-btn").addEventListener("click", () => {
-      if (!appState.currentUser) {
-        alert(L("Inicia sesión para solicitar un crédito hipotecario.", "Sign in to apply for a mortgage loan."));
-        return;
-      }
-      const amount = parseFloat(calcPriceInput.value) * (1 - (parseFloat(calcDownpaymentPct.value)/100));
-      const credits = appState.currentUser.credits || [];
-      credits.push({
-        id: `cred-${Date.now()}`,
-        bank: L("MudaT Pre-Aprobado (Santander / Banorte)", "MudaT Pre-Approved (Santander / Banorte)"),
-        amount: amount,
-        status: L("En Evaluación", "Under Review"),
-        monthlyPayment: currentMonthlyPayment
-      });
-      appState.currentUser.credits = credits;
-      updateUserProfile(appState.currentUser);
-      alert(L(
-        "¡Solicitud enviada! Iniciando pre-aprobación digital con bancos asociados. Revisa el estado de tu trámite en tu portal.",
-        "Request sent! Initiating digital pre-approval with partner banks. Check your application status in your portal."
-      ));
-    });
-
     // Inicializar módulo interactivo CONOCE LA ZONA
     initConoceLaZona(prop);
   }

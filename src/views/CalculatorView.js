@@ -1,4 +1,3 @@
-import { updateUserProfile } from "../services/auth.js?v=20261120";
 import { L, formatCurrency } from "../services/i18n.js";
 
 export async function renderCalculatorView(state) {
@@ -67,9 +66,10 @@ export async function renderCalculatorView(state) {
               <span class="calc-result-title">${L("Pago Mensual Estimado", "Estimated Monthly Payment")}</span>
               <p class="monthly-payment-amount" id="sim-payment-out">$0.00</p>
               <p class="cat-info">${L("Tasa Fija Cat Promedio 12.8% sin IVA", "Fixed Rate Avg. APR 12.8% excl. VAT")}</p>
-              <button class="btn btn-success" id="sim-preapprove-btn">
-                <i data-lucide="check-circle" class="icon-inline icon-lg"></i> ${L("Pre-Aprobación Bancaria Digital", "Digital Bank Pre-Approval")}
-              </button>
+              <p class="calc-disclaimer">${L("*Cálculo simulado con fines informativos. Para mayores informes o asesoría hipotecaria personalizada, contacta a un asesor.", "*Simulated calculation for informational purposes. For more information or personalized mortgage advice, contact an advisor.")}</p>
+              <a href="https://wa.me/525512345678?text=${encodeURIComponent(L("Hola, realicé una simulación hipotecaria en MudaT y me gustaría recibir mayores informes con un asesor.", "Hello, I ran a mortgage simulation on MudaT and would like more information from an advisor."))}" target="_blank" rel="noopener" class="btn btn-primary" id="sim-contact-advisor-btn">
+                <i data-lucide="message-circle" class="icon-inline icon-lg"></i> ${L("Contactar a un Asesor", "Contact an Advisor")}
+              </a>
             </div>
             
             <div class="margin-top-lg">
@@ -195,33 +195,6 @@ export async function renderCalculatorView(state) {
 
     // Apply first calculation
     calculateMortgage();
-
-    // Preapproval button action
-    document.getElementById("sim-preapprove-btn").addEventListener("click", () => {
-      if (!appState.currentUser) {
-        alert(L("Por favor inicia sesión para procesar tu pre-aprobación hipotecaria.", "Please sign in to process your mortgage pre-approval."));
-        return;
-      }
-      const price = parseFloat(priceInput.value) || 0;
-      const principal = price * (1 - (parseFloat(downPctInput.value)/100));
-      const userName = appState.currentUser?.name || L("Cliente", "Client");
-
-      const credits = appState.currentUser.credits || [];
-      credits.push({
-        id: `cred-${Date.now()}`,
-        bank: L("MudaT Pre-Aprobado (Simulación Completa)", "MudaT Pre-Approved (Full Simulation)"),
-        amount: principal,
-        status: L("Pre-Aprobado en 5 min", "Pre-Approved in 5 min"),
-        monthlyPayment: lastMonthlyPayment
-      });
-      appState.currentUser.credits = credits;
-      updateUserProfile(appState.currentUser);
-      
-      alert(L(
-        `¡Felicidades ${userName}! Tu crédito hipotecario por ${formatMXN(principal)} ha sido Pre-Aprobado de forma digital gracias a tu excelente historial crediticio y documentos en plataforma. Revisa tu certificado de pre-aprobación en tu perfil.`,
-        `Congratulations ${userName}! Your mortgage loan for ${formatMXN(principal)} has been digitally Pre-Approved thanks to your excellent credit history and documents on the platform. Check your pre-approval certificate in your profile.`
-      ));
-    });
   }
 
   return { html, init };

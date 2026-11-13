@@ -34,7 +34,7 @@ const routes = {
     return renderSearch(state);
   },
   "property-detail": async () => {
-    const { renderPropertyDetail } = await import("./src/views/PropertyDetail.js");
+    const { renderPropertyDetail } = await import("./src/views/PropertyDetail.js?v=20261123");
     return renderPropertyDetail(state);
   },
   "client-dashboard": async () => {
@@ -71,7 +71,7 @@ const routes = {
     return renderPublishProperty(state);
   },
   "calculator": async () => {
-    const { renderCalculatorView } = await import("./src/views/CalculatorView.js");
+    const { renderCalculatorView } = await import("./src/views/CalculatorView.js?v=20261123");
     return renderCalculatorView(state);
   },
   "admin": async () => {
@@ -309,8 +309,8 @@ function simulateAIResponse(query) {
   
   if (lowerQuery.includes("mensualidad") || lowerQuery.includes("crédito") || lowerQuery.includes("credito") || lowerQuery.includes("hipoteca") || lowerQuery.includes("mortgage") || lowerQuery.includes("payment") || lowerQuery.includes("monthly")) {
     return L(
-      "🧮 **Simulador Hipotecario MudaT AI**:\nPara un crédito promedio de **$3,500,000 MXN** con una tasa de interés del **10.2%** y plazo a **20 años**:\n- **Mensualidad Estimada**: ~$34,250 MXN.\n- **Enganche Recomendado**: 20% ($700,000 MXN) para mejores tasas.\n- **Ingreso Mínimo Sugerido**: ~$102,000 MXN mensuales comprobables.\n\n¿Quieres que simulemos un monto de propiedad diferente o solicitemos una pre-aprobación bancaria directa desde tu portal?",
-      "🧮 **MudaT AI Mortgage Simulator**:\nFor an average **$3,500,000 MXN** loan at **10.2%** interest over **20 years**:\n- **Estimated Monthly Payment**: ~$34,250 MXN.\n- **Recommended Down Payment**: 20% ($700,000 MXN) for optimal rates.\n- **Suggested Minimum Income**: ~$102,000 MXN verifiable per month.\n\nWould you like to simulate a different property amount or request direct bank pre-approval from your portal?"
+      "🧮 **Simulador Hipotecario MudaT AI**:\nPara un crédito promedio de **$3,500,000 MXN** con una tasa de interés del **10.2%** y plazo a **20 años**:\n- **Mensualidad Estimada**: ~$34,250 MXN.\n- **Enganche Recomendado**: 20% ($700,000 MXN) para mejores tasas.\n- **Ingreso Mínimo Sugerido**: ~$102,000 MXN mensuales comprobables.\n\n*Cálculo simulado con fines informativos.* Para mayores informes o asesoría personalizada, contacta a un asesor.",
+      "🧮 **MudaT AI Mortgage Simulator**:\nFor an average **$3,500,000 MXN** loan at **10.2%** interest over **20 years**:\n- **Estimated Monthly Payment**: ~$34,250 MXN.\n- **Recommended Down Payment**: 20% ($700,000 MXN) for optimal rates.\n- **Suggested Minimum Income**: ~$102,000 MXN verifiable per month.\n\n*Simulated estimate for informational purposes.* For more information or personalized guidance, please contact an advisor."
     );
   }
 
