@@ -175,6 +175,28 @@ export async function renderHome(state) {
       </div>
     </section>
 
+    <!-- Asesora Principal Destacada -->
+    <section class="section-container">
+      <div class="lead-advisor-banner glass-premium">
+        <div class="lead-advisor-photo-wrap">
+          <img src="./assets/images/asesora-yesenia-cuevas.jpg" alt="Yesenia Cuevas - Asesora Principal MudaT" class="lead-advisor-photo">
+          <span class="lead-advisor-badge">Asesora Principal</span>
+        </div>
+        <div class="lead-advisor-info">
+          <p class="section-tagline">Asesoría Patrimonial Personalizada</p>
+          <h2 class="lead-advisor-name">Yesenia Cuevas</h2>
+          <p class="lead-advisor-role">Directora Comercial & Asesora Inmobiliaria Certificada • 5.0 ★</p>
+          <p class="lead-advisor-bio">
+            Acompañamiento estratégico de principio a fin en la compra, venta e inversión de propiedades residenciales y comerciales en México. Especialista en análisis de plusvalía, negociación patrimonial y gestión integral de créditos hipotecarios.
+          </p>
+          <div class="lead-advisor-actions">
+            <a href="#comprar" class="btn btn-primary">Ver Propiedades de Yesenia</a>
+            <a href="#asesores" class="btn btn-outline">Panel de Asesores (CRM)</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- Servicios del Ecosistema -->
     <section class="section-container">
       <p class="section-tagline text-center">Servicios Integrados</p>

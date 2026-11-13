@@ -24,14 +24,14 @@ const DEFAULT_USERS = {
   },
   advisor: {
     id: "adv-1",
-    name: "Sofía Altamirano",
-    email: "sofia.a@mudat.mx",
+    name: "Yesenia Cuevas",
+    email: "yesenia.cuevas@mudat.mx",
     role: "advisor",
     phone: "+52 55 1234 5678",
-    avatar: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=150&q=80",
-    rating: 4.9,
+    avatar: "./assets/images/asesora-yesenia-cuevas.jpg",
+    rating: 5.0,
     commissionRate: 4.5,
-    agency: "MudaT Premium CDMX"
+    agency: "MudaT Bienes Raíces — Asesora Principal"
   },
   admin: {
     id: "admin-1",

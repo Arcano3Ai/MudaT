@@ -31,11 +31,11 @@ export const mockProperties = [
     videoUrl: "https://www.w3schools.com/html/mov_bbb.mp4",
     advisor: {
       id: "adv-1",
-      name: "Sofía Altamirano",
+      name: "Yesenia Cuevas",
       phone: "+52 55 1234 5678",
-      email: "sofia.a@mudat.mx",
-      avatar: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=150&q=80",
-      rating: 4.9
+      email: "yesenia.cuevas@mudat.mx",
+      avatar: "./assets/images/asesora-yesenia-cuevas.jpg",
+      rating: 5.0
     },
     roi: "6.8% anual",
     schoolsNearby: true,
@@ -118,11 +118,11 @@ export const mockProperties = [
     videoUrl: "https://www.w3schools.com/html/mov_bbb.mp4",
     advisor: {
       id: "adv-1",
-      name: "Sofía Altamirano",
+      name: "Yesenia Cuevas",
       phone: "+52 55 1234 5678",
-      email: "sofia.a@mudat.mx",
-      avatar: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=150&q=80",
-      rating: 4.9
+      email: "yesenia.cuevas@mudat.mx",
+      avatar: "./assets/images/asesora-yesenia-cuevas.jpg",
+      rating: 5.0
     },
     roi: "5.5% anual",
     schoolsNearby: true,
@@ -289,11 +289,11 @@ export const mockProperties = [
     videoUrl: "",
     advisor: {
       id: "adv-1",
-      name: "Sofía Altamirano",
+      name: "Yesenia Cuevas",
       phone: "+52 55 1234 5678",
-      email: "sofia.a@mudat.mx",
-      avatar: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=150&q=80",
-      rating: 4.9
+      email: "yesenia.cuevas@mudat.mx",
+      avatar: "./assets/images/asesora-yesenia-cuevas.jpg",
+      rating: 5.0
     },
     roi: "11.2% anual",
     schoolsNearby: false,
@@ -419,11 +419,11 @@ export const mockProperties = [
     videoUrl: "",
     advisor: {
       id: "adv-1",
-      name: "Sofía Altamirano",
+      name: "Yesenia Cuevas",
       phone: "+52 55 1234 5678",
-      email: "sofia.a@mudat.mx",
-      avatar: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=150&q=80",
-      rating: 4.9
+      email: "yesenia.cuevas@mudat.mx",
+      avatar: "./assets/images/asesora-yesenia-cuevas.jpg",
+      rating: 5.0
     },
     roi: "8.2% anual",
     schoolsNearby: true,
@@ -505,11 +505,11 @@ export const mockProperties = [
     videoUrl: "",
     advisor: {
       id: "adv-1",
-      name: "Sofía Altamirano",
+      name: "Yesenia Cuevas",
       phone: "+52 55 1234 5678",
-      email: "sofia.a@mudat.mx",
-      avatar: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=150&q=80",
-      rating: 4.9
+      email: "yesenia.cuevas@mudat.mx",
+      avatar: "./assets/images/asesora-yesenia-cuevas.jpg",
+      rating: 5.0
     },
     roi: "13.4% anual",
     schoolsNearby: false,
@@ -591,11 +591,11 @@ export const mockProperties = [
     videoUrl: "",
     advisor: {
       id: "adv-1",
-      name: "Sofía Altamirano",
+      name: "Yesenia Cuevas",
       phone: "+52 55 1234 5678",
-      email: "sofia.a@mudat.mx",
-      avatar: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=150&q=80",
-      rating: 4.9
+      email: "yesenia.cuevas@mudat.mx",
+      avatar: "./assets/images/asesora-yesenia-cuevas.jpg",
+      rating: 5.0
     },
     roi: "7.9% anual",
     schoolsNearby: true,
